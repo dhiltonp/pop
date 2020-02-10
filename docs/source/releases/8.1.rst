@@ -1,0 +1,6 @@
+===============
+Pop Release 8.1
+===============
+
+Just a simple addition to the `hub.pop.sub.iter_subs` function
+allowing for recursive iteration over nested subs.
