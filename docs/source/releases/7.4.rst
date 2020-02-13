@@ -24,7 +24,7 @@ Add pop-seed -t v
 With the introduction of Idem it has become expedient to allow pop-seed to
 create POP trees that do not include the tools needed for a standalone
 project but just the structure for a vertical app-merge project. This
-can now be accomplished with the `pop-seed -t v <project name>` command. 
+can now be accomplished with the `pop-seed -t v <project name>` command.
 
 Update Quickstart
 =================

@@ -7,7 +7,7 @@ import glob
 import logging
 
 CODE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-TPATH_DIR = os.path.join(os.path.dirname(__file__), 'tpath')
+TPATH_DIR = os.path.join(os.path.dirname(__file__), "tpath")
 
 if CODE_DIR in sys.path:
     sys.path.remove(CODE_DIR)
@@ -18,26 +18,27 @@ sys.path.insert(0, TPATH_DIR)
 import pytest
 
 
-log = logging.getLogger('pop.tests')
+log = logging.getLogger("pop.tests")
+
 
 def pytest_runtest_protocol(item, nextitem):
-    '''
+    """
     implements the runtest_setup/call/teardown protocol for
     the given test item, including capturing exceptions and calling
     reporting hooks.
-    '''
-    log.debug('>>>>> START >>>>> {0}'.format(item.name))
+    """
+    log.debug(">>>>> START >>>>> {0}".format(item.name))
 
 
 def pytest_runtest_teardown(item):
-    '''
+    """
     called after ``pytest_runtest_call``
-    '''
-    log.debug('<<<<< END <<<<<<< {0}'.format(item.name))
+    """
+    log.debug("<<<<< END <<<<<<< {0}".format(item.name))
 
 
 @pytest.fixture
 def os_sleep_secs():
-    if 'CI_RUN' in os.environ:
+    if "CI_RUN" in os.environ:
         return 1.75
     return 0.5

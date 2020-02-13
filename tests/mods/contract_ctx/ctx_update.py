@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__contracts__ = 'ctx_update'
+__contracts__ = "ctx_update"
 
 
 def test_call(hub, value):

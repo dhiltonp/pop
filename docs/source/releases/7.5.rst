@@ -20,7 +20,7 @@ ability:
             'subs': ['create', 'remove', 'edit'],
             },
     }
-    
+
     SUBS = {
         'create': {
             'help': 'Create some things',

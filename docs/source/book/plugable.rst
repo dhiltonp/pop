@@ -5,7 +5,7 @@ Define "Pluggable"
 This section deinfes what makes code plugable, some of the concepts here will
 be new to you, that is OK. A programming paradigm cannot be created without
 exposing a number of concepts and terms. Many of these terms are explained
-in much greater depth later in the text. Knowing the basics around the 
+in much greater depth later in the text. Knowing the basics around the
 rules of pluggablity and how the macro concepts fit will aid learning them
 in greater depth later on.
 
@@ -146,4 +146,3 @@ Apps should be small enough that they can be explained to a new engineer - to th
 that the new engineer can extend or maintain that *App* - within one to few days. If
 this cannot be done, then a new app should be created to partition out and isolate the
 next chunk of code.
-

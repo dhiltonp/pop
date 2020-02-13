@@ -103,4 +103,3 @@ Pop is all about making patters inside of subs, if patterns are not being made t
 the code is not pop
 
 Define what a pattern is and how to think about making patterns
-

@@ -51,7 +51,7 @@ is called `pop`. It contains the tools needed to extend the `hub` and add additi
 When calling a reference on the `hub` the full path to the reference is called. This
 allows for all code to always exist in a finite, traceable location.
 
-.. code-block:: python 
+.. code-block:: python
 
     import pop.hub
 

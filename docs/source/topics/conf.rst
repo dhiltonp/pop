@@ -274,7 +274,7 @@ As of the 7.5 release config options can be applied to multiple subcommands:
             'subs': ['create', 'remove', 'edit'],
             },
     }
-    
+
     SUBS = {
         'create': {
             'help': 'Create some things',

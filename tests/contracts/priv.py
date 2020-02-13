@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__virtualname__ = 'priv'
+__virtualname__ = "priv"
 
 
 def call(hub, ctx):

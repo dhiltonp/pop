@@ -1,2 +1,2 @@
 def run(hub):
-    hub.iter.DATA['foo'] = True
+    hub.iter.DATA["foo"] = True

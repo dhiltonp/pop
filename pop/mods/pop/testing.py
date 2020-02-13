@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Provides tools to help unit test projects using pop.
 For now, provides mock Hub instances.
-'''
+"""
 # Import python libs
 import inspect
 import copy
@@ -17,8 +17,11 @@ except ImportError:
 
     def create_autospec(spec, *args, **kwargs):
         if iscoroutinefunction(spec):
-            raise Exception('MockHub requires asynctest in order to mock async functions')
+            raise Exception(
+                "MockHub requires asynctest in order to mock async functions"
+            )
         return mock_create_autospec(spec, *args, **kwargs)
+
 
 # Import pop libs
 from pop.contract import Contracted
@@ -61,7 +64,7 @@ class _LazyPop:
     def __init__(self, obj, lut=None):
         if isinstance(obj, Hub):
             lut = _LookUpTable()
-            lut.update('hub', self)
+            lut.update("hub", self)
             lut.update(obj, self)
         elif isinstance(obj, Sub):
             obj._load_all()
@@ -73,7 +76,7 @@ class _LazyPop:
 
     def __attr_names(self):
         # TODO: '_' - is this actually right? what should I really expose?
-        attrs = [attr for attr in self.__obj.__dict__ if not attr.startswith('_')]
+        attrs = [attr for attr in self.__obj.__dict__ if not attr.startswith("_")]
 
         if isinstance(self.__obj, Hub):
             attrs += list(self.__obj._subs)
@@ -83,16 +86,18 @@ class _LazyPop:
         elif isinstance(self.__obj, LoadedMod):
             attrs += list(self.__obj._attrs)
         else:
-            raise Exception('Standard objects should not be lazy: {}'.format(str(self.__obj)))
+            raise Exception(
+                "Standard objects should not be lazy: {}".format(str(self.__obj))
+            )
 
         return attrs
 
     def __getattribute__(self, item):
-        if not item.strip('_'):
+        if not item.strip("_"):
             raise NotImplementedError
-        if '.' in item:
+        if "." in item:
             result = self
-            for part in item.split('.').copy():
+            for part in item.split(".").copy():
                 result = getattr(result, part)
             return result
 
@@ -123,27 +128,27 @@ class _LazyPop:
 
 
 def strip_hub(f):
-    '''
+    """
     returns a no-op function with the same function signature... minus the first parameter (hub).
-    '''
+    """
     if inspect.iscoroutinefunction(f):
-        newf = 'async '
+        newf = "async "
     else:
-        newf = ''
-    newf += 'def {}('.format(f.__name__)
+        newf = ""
+    newf += "def {}(".format(f.__name__)
     params = inspect.signature(f).parameters
     new_params = []
     for param in params:
         if params[param].kind is inspect.Parameter.VAR_POSITIONAL:
-            new_params.append('*{}'.format(param))
+            new_params.append("*{}".format(param))
         elif params[param].kind is inspect.Parameter.VAR_KEYWORD:
-            new_params.append('**{}'.format(param))
+            new_params.append("**{}".format(param))
         else:
             new_params.append(param)
         if params[param].default is not inspect.Parameter.empty:
             new_params[-1] += '="has default"'
-    newf += ', '.join(new_params[1:])  # skip hub
-    newf += '): pass'
+    newf += ", ".join(new_params[1:])  # skip hub
+    newf += "): pass"
 
     scope = {}
     exec(newf, scope)
@@ -152,25 +157,27 @@ def strip_hub(f):
 
 
 class MockHub(_LazyPop):
-    '''
+    """
     Provides mocks mirroring a real hub::
 
         hub.sub.mod.fn()  # mock
         hub.sub.mod.attr  # mock
-    '''
+    """
+
     def _mock_function(self, f):
         return create_autospec(strip_hub(f.func), spec_set=True)
 
 
 class NoContractHub(_LazyPop):
-    '''
+    """
     Provides access to real functions, bypassing contracts and mocking attributes::
 
         hub.sub.mod.fn()  # executes real function, no contracts
         hub.sub.mod.attr  # mock
-    '''
+    """
+
     def _mock_function(self, f):
-        return partial(f.func, self._LazyPop__lut.lookup('hub'))
+        return partial(f.func, self._LazyPop__lut.lookup("hub"))
 
 
 def mock_contracted(c):
@@ -181,7 +188,7 @@ def mock_contracted(c):
 
 
 class ContractHub(_LazyPop):
-    '''
+    """
     Runs a call through the contract system, but the function is a mock. Mostly useful for integration tests:
 
         hub.sub.mod.fn()  # executes mock function, real contracts
@@ -215,6 +222,7 @@ class ContractHub(_LazyPop):
     Assert that one contract will be called before another::
 
         assert contract_hub.sub.mod.fn.contracts.index(contract1) < contract_hub.sub.mod.fn.contracts.index(contract2)
-    '''
+    """
+
     def _mock_function(self, f):
         return mock_contracted(f)

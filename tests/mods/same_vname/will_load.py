@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-__virtualname__ = 'vname'
+__virtualname__ = "vname"
 
 
 def __virtual__(hub):
@@ -9,4 +9,4 @@ def __virtual__(hub):
 
 
 def func(hub):
-    return 'wha? Yep!'
+    return "wha? Yep!"
