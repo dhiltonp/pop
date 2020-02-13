@@ -8,9 +8,9 @@ import pytest
 
 from pop.scanner import scan  # pylint: disable=unused-import
 
-__virtualname__ = 'test'
-__contracts__ = 'test'
-__func_alias__ = {'ping_': 'ping'}
+__virtualname__ = "test"
+__contracts__ = "test"
+__func_alias__ = {"ping_": "ping"}
 
 
 def ping_(hub):

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-'''
+"""
 module used while testing mock hubs provided in 'testing'.
-'''
+"""
 
 
-__contracts__ = ['testing']
+__contracts__ = ["testing"]
 
 
 def noparam(hub):
@@ -16,7 +16,7 @@ def echo(hub, param):
     return param
 
 
-def signature_func(hub, param1, param2='default'):
+def signature_func(hub, param1, param2="default"):
     pass
 
 

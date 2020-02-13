@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 The reader module is used to read the config data. This will read in cli
 arguments and merge them with config fie arguments.
-'''
+"""
 
 # Priority order: cli, config, cli_defaults
 
-__virtualname__ = 'reader'
+__virtualname__ = "reader"
 __contracts__ = [__virtualname__]
 
 
 def _merge_dicts(opts, updates, os_opts, explicit_cli_args):
-    '''
+    """
     recursively merge updates into opts
-    '''
+    """
     for key, val in os_opts.items():
         if not val:
             # Don't use empty os vals
@@ -44,15 +44,17 @@ def _merge_dicts(opts, updates, os_opts, explicit_cli_args):
     return opts
 
 
-def read(hub,
-        defaults,
-        subs=None,
-        loader='json',
-        process_cli=True,
-        process_cli_known_args_only=False,
-        args=None,
-        namespace=None):
-    '''
+def read(
+    hub,
+    defaults,
+    subs=None,
+    loader="json",
+    process_cli=True,
+    process_cli_known_args_only=False,
+    args=None,
+    namespace=None,
+):
+    """
     Pass in the default options dict to use
     :param opts:
     :param process_cli: Process the passed args or sys.argv
@@ -60,42 +62,44 @@ def read(hub,
     :param args: Arguments to pass to ArgumentParser
     :param namespace: argparse.Namespace to pass to ArgumentParser
     :return: options
-    '''
+    """
     hub.conf._loader = loader
     if subs:
         hub.conf.args.subs(subs)
-    opts = hub.conf.args.setup(defaults)['return']
+    opts = hub.conf.args.setup(defaults)["return"]
     os_opts = hub.conf.os.gather(defaults)
     if process_cli is True:
-        cli_opts = hub.conf.args.parse(args, namespace, process_cli_known_args_only)['return']
+        cli_opts = hub.conf.args.parse(args, namespace, process_cli_known_args_only)[
+            "return"
+        ]
     else:
         cli_opts = {}
-    explicit_cli_args = cli_opts.pop('_explicit_cli_args_', set())
+    explicit_cli_args = cli_opts.pop("_explicit_cli_args_", set())
     cli_opts = hub.conf.args.render(defaults, cli_opts, explicit_cli_args)
     kwargs = {}
     # Due to the order of priorities and the representation of defaults in the
     # Argparser we need to manually check if the config option values are from
     # the cli or from defaults
     f_func = False
-    if 'config_dir' in cli_opts:
-        if cli_opts['config_dir']:
-            kwargs['confdir'] = cli_opts['config_dir']
+    if "config_dir" in cli_opts:
+        if cli_opts["config_dir"]:
+            kwargs["confdir"] = cli_opts["config_dir"]
         else:
-            kwargs['confdir'] = opts['config_dir']
-        if 'config_recurse' in cli_opts:
-            if cli_opts['config_recurse']:
-                kwargs['recurse'] = cli_opts['config_recurse']
+            kwargs["confdir"] = opts["config_dir"]
+        if "config_recurse" in cli_opts:
+            if cli_opts["config_recurse"]:
+                kwargs["recurse"] = cli_opts["config_recurse"]
             else:
-                kwargs['recurse'] = opts['config_recurse']
+                kwargs["recurse"] = opts["config_recurse"]
         # If the config_dir configuration dictionary provides a configuration
         # file pattern to read, pass it along
-        kwargs['pattern'] = defaults['config_dir'].get('pattern')
+        kwargs["pattern"] = defaults["config_dir"].get("pattern")
         f_func = hub.conf.file.load_dir
-    elif 'config' in cli_opts:
-        if cli_opts['config']:
-            kwargs['paths'] = cli_opts['config']
+    elif "config" in cli_opts:
+        if cli_opts["config"]:
+            kwargs["paths"] = cli_opts["config"]
         else:
-            kwargs['paths'] = opts['config']
+            kwargs["paths"] = opts["config"]
         f_func = hub.conf.file.load_file
     # Render args before config parsing
     if f_func:

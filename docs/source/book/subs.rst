@@ -43,7 +43,7 @@ opinion about how to do things right.
 Using Dynamic Names
 -------------------
 
-The best way to add a Sub to your `hub` is to use *Dynamic Names*. Using 
+The best way to add a Sub to your `hub` is to use *Dynamic Names*. Using
 *Dynamic Names* is easy. It requires you to register your *Sub* with the `pop`
 configuration system.
 

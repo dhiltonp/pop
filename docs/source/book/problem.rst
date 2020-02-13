@@ -76,7 +76,7 @@ into the 1990s, and computing hit consumers, and the world changed.
 Windows and the GUI
 -------------------
 
-In the early 1990s we saw the emergence of a new kind of computer, a 
+In the early 1990s we saw the emergence of a new kind of computer, a
 *Personal Computer*. A computer that fit on a desk and was meant to solve
 the problems of an individual, rather than the problems of banks, governments,
 and corporations.

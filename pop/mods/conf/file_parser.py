@@ -1,36 +1,36 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Configuration file core loading functions
-'''
+"""
 
 # Import python libs
 import os
 import glob
 import fnmatch
 
-__virtualname__ = 'file'
+__virtualname__ = "file"
 __contracts__ = [__virtualname__]
 
 
 def load_file(hub, paths, defaults=None, overrides=None, includes=True):
-    '''
+    """
     Load a single configuration file
-    '''
+    """
     opts = {}
     if isinstance(defaults, dict):
         opts.update(defaults)
     if not isinstance(paths, list):
-        paths = paths.split(',')
+        paths = paths.split(",")
     add = []
     for fn_ in paths:
         add.extend(glob.glob(fn_))
     paths.extend(add)
     for fn_ in paths:
-        if hub.conf._loader == 'yaml':
+        if hub.conf._loader == "yaml":
             opts.update(hub.conf.yaml.load(fn_))
-        elif hub.conf._loader == 'json':
+        elif hub.conf._loader == "json":
             opts.update(hub.conf.json.load(fn_))
-        elif hub.conf._loader == 'toml':
+        elif hub.conf._loader == "toml":
             opts.update(hub.conf.toml.load(fn_))
     if includes:
         hub.conf.file.proc_include(opts)
@@ -39,14 +39,16 @@ def load_file(hub, paths, defaults=None, overrides=None, includes=True):
     return opts
 
 
-def load_dir(hub,
-             confdir,
-             defaults=None,
-             overrides=None,
-             includes=True,
-             recurse=False,
-             pattern=None):
-    '''
+def load_dir(
+    hub,
+    confdir,
+    defaults=None,
+    overrides=None,
+    includes=True,
+    recurse=False,
+    pattern=None,
+):
+    """
     Load takes a directory location to scan for configuration files. These
     files will be read in. The defaults dict defines what
     configuration options should exist if not found in the confdir. Overrides
@@ -54,10 +56,10 @@ def load_dir(hub,
     those options existed before. If includes is set to True, then the
     statements 'include' and 'include_dir' found in either the defaults or
     in configuration files.
-    '''
+    """
     opts = {}
     if not isinstance(confdir, list):
-        confdir = confdir.split(',')
+        confdir = confdir.split(",")
     confdirs = []
     for dirs in confdir:
         if not isinstance(dirs, (list, tuple)):
@@ -100,16 +102,16 @@ def load_dir(hub,
 
 
 def proc_include(hub, opts):
-    '''
+    """
     process include and include_dir
-    '''
+    """
     rec = False
-    if opts.get('include_dir'):
-        idir = opts.pop('include_dir')
+    if opts.get("include_dir"):
+        idir = opts.pop("include_dir")
         opts.update(hub.conf.file.load_dir(idir))
         rec = True
-    if opts.get('include'):
-        ifn = opts.pop('include')
+    if opts.get("include"):
+        ifn = opts.pop("include")
         opts.update(hub.conf.file.load_file(ifn))
         rec = True
     if rec:

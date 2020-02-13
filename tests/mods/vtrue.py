@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__virtualname__ = 'truev'
+__virtualname__ = "truev"
 
 
 def __virtual__(hub):

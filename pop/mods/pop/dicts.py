@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Tools to work with dicts
-'''
+"""
 
-__virtualname__ = 'dicts'
+__virtualname__ = "dicts"
 
 
-def traverse(hub, data, key, default=None, delimiter=':'):
-    '''
+def traverse(hub, data, key, default=None, delimiter=":"):
+    """
     traverse a dict or list using a colon-delimited (or otherwise delimited,
     using the 'delimiter' param) target string. the target 'foo:bar:0' will
     return data['foo']['bar'][0] if this value exists, and will otherwise
@@ -16,7 +16,7 @@ def traverse(hub, data, key, default=None, delimiter=':'):
     the target 'foo:bar:0' will return data['foo']['bar'][0] if data like
     {'foo':{'bar':['baz']}} , if data like {'foo':{'bar':{'0':'baz'}}}
     then return data['foo']['bar']['0']
-    '''
+    """
     for each in key.split(delimiter):
         if isinstance(data, list):
             try:

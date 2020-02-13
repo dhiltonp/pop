@@ -39,4 +39,3 @@ your plugins!
 
 The logging system in pop is of course... Pluggable! So it is easy to add
 more powerful plugins for kore advanced logging int he future.
-

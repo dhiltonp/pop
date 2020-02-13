@@ -3,8 +3,8 @@
 
 
 def __init__(hub):
-    hub.context['LOADED'] = True
+    hub.context["LOADED"] = True
 
 
 def loaded(hub):
-    return 'LOADED' in hub.context
+    return "LOADED" in hub.context

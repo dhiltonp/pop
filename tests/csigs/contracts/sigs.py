@@ -1,6 +1,7 @@
 # Import python libs
 from typing import List
 
+
 def sig_first(hub, a: str, b, c: List):
     pass
 
@@ -30,7 +31,7 @@ def sig_seven(hub, foo):
 
 
 def sig_missing():
-    '''
+    """
     This function is missing in the module to make sure it gets picked up
-    '''
+    """
     pass

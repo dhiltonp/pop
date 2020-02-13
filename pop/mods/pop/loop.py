@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 The main interface for management of the aio loop
-'''
+"""
 # Import python libs
 import asyncio
 import os
@@ -9,7 +9,7 @@ import sys
 import signal
 import functools
 
-__virtualname__ = 'loop'
+__virtualname__ = "loop"
 
 
 def __virtual__(hub):
@@ -17,89 +17,84 @@ def __virtual__(hub):
 
 
 def create(hub):
-    '''
+    """
     Create the loop at hub.pop.Loop
-    '''
+    """
     if not hub.pop.Loop:
         hub.pop.loop.FUT_QUE = asyncio.Queue()
         hub.pop.Loop = asyncio.get_event_loop()
 
 
 def call_soon(hub, ref, *args, **kwargs):
-    '''
+    """
     Schedule a coroutine to be called when the loop has time. This needs
     to be called after the creation fo the loop
-    '''
+    """
     fun = hub.pop.ref.get_func(ref)
     hub.pop.Loop.call_soon(functools.partial(fun, *args, **kwargs))
 
 
 def ensure_future(hub, ref, *args, **kwargs):
-    '''
+    """
     Schedule a coroutine to be called when the loop has time. This needs
     to be called after the creation fo the loop. This function also uses
     the hold system to await the future when it is done making it easy
     to create a future that will be cleanly awaited in the background.
-    '''
+    """
     fun = getattr(hub, ref)
     future = asyncio.ensure_future(fun(*args, **kwargs))
 
     def callback(fut):
         hub.pop.loop.FUT_QUE.put_nowait(fut)
+
     future.add_done_callback(callback)
     return future
 
 
 def start(hub, *coros, hold=False, sigint=None, sigterm=None):
-    '''
+    """
     Start a loop that will run until complete
-    '''
+    """
     hub.pop.loop.create()
     if sigint:
         s = signal.SIGINT
-        hub.pop.Loop.add_signal_handler(
-            s, lambda s=s: asyncio.create_task(sigint(s))
-            )
+        hub.pop.Loop.add_signal_handler(s, lambda s=s: asyncio.create_task(sigint(s)))
     if sigterm:
         s = signal.SIGTERM
-        hub.pop.Loop.add_signal_handler(
-            s, lambda s=s: asyncio.create_task(sigterm(s))
-            )
+        hub.pop.Loop.add_signal_handler(s, lambda s=s: asyncio.create_task(sigterm(s)))
     if hold:
         coros = list(coros)
         coros.append(_holder(hub))
     # DO NOT CHANGE THIS CALL TO run_forever! If we do that then the tracebacks
     # do not get resolved.
-    return hub.pop.Loop.run_until_complete(
-            asyncio.gather(*coros)
-            )
+    return hub.pop.Loop.run_until_complete(asyncio.gather(*coros))
 
 
 async def _holder(hub):
-    '''
+    """
     Just a sleeping while loop to hold the loop open while it runs until
     complete
-    '''
+    """
     while True:
         future = await hub.pop.loop.FUT_QUE.get()
         await future
 
 
 async def await_futures(hub):
-    '''
+    """
     Scan over the futures that have completed and manually await them.
     This function is used to clean up futures when the loop is not opened
     up with hold=True so that ensured futures can be cleaned up on demand
-    '''
+    """
     while not hub.pop.loop.FUT_QUE.empty():
         future = await hub.pop.loop.FUT_QUE.get()
         await future
 
 
 async def kill(hub, wait=0):
-    '''
+    """
     Close out the loop
-    '''
+    """
     await asyncio.sleep(wait)
     hub.pop.Loop.stop()
     while True:
@@ -109,7 +104,7 @@ async def kill(hub, wait=0):
 
 
 async def as_yielded(hub, gens):
-    '''
+    """
     Concurrently run multiple async generators and yield the next yielded
     value from the soonest yielded generator.
 
@@ -123,21 +118,26 @@ async def as_yielded(hub, gens):
             gens.append(many())
         async for y in as_yielded(gens):
             print(y)
-    '''
+    """
     fin = os.urandom(32)
     que = asyncio.Queue()
     fs = []
     to_clean = []
+
     async def _yield(gen):
         async for comp in gen:
             await que.put(comp)
+
     async def _ensure(coros):
         for f in asyncio.as_completed(coros):
             await f
+
     async def _set_done():
         await que.put(fin)
+
     def _done(future):
         to_clean.append(asyncio.ensure_future(_set_done()))
+
     coros = []
     for gen in gens:
         coros.append(_yield(gen))
