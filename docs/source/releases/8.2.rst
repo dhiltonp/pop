@@ -1,0 +1,14 @@
+===============
+Pop Release 8.2
+===============
+
+This release introduces black to the pop codebase. This adds a significant
+change in how code style is managed, code style is now just managed
+with the PSF tool `black`.
+
+This release also extends `pop-seed` to auto enforce the same
+standard of using `black` in all `pop` projects.
+
+The `pop-seed` command will now add a pyproject.toml file
+and a pre-commit configuration. The hope is that this will allow
+all `pop` projects to adhere to a completely consistent style.
