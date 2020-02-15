@@ -101,7 +101,6 @@ exclude = '''
   | buck-out
   | build
   | dist
-'''
 """
 
 PRECOM = """---
@@ -157,9 +156,9 @@ INIT = """def __init__(hub):
     pass
 
 
-def run(hub):
-    hub.pop.conf.integrate(['%%NAME%%'], cli='%%NAME%%', roots=True, loader='yaml')
-    print('%%NAME%% works!')
+def cli(hub):
+    hub.pop.conf.integrate(["%%NAME%%"], cli="%%NAME%%", roots=True, loader="yaml")
+    print("%%NAME%% works!")
 """
 
 REQ = "pop\n"
@@ -169,11 +168,11 @@ CONFIG = {}
 GLOBAL = {}
 SUBS = {}
 DYNE = {
-        '%%NAME%%': ['%%NAME%%'],
+    "%%NAME%%": ["%%NAME%%"],
 %%DYNE%%}
 """
 
-VER = "version = '1'\n"
+VER = 'version = "1"\n'
 
 
 def new(hub):
@@ -265,7 +264,7 @@ def mkrun(hub, name):
     """
     path = os.path.join(hub.PATH, "run.py")
     run_str = SCRIPT.replace("%%NAME%%", name)
-    run_str += "\n\nstart()"
+    run_str += "\n\nstart()\n"
     with open(path, "w+") as fp:
         fp.write(run_str)
 
@@ -337,12 +336,15 @@ def print_post(hub, name):
     Print a message after the run to document how to enable
     things like pre-commit
     """
-    print(f"Congradualtions! You not have a project set up called {name}!")
-    print("This project can be executed by calling the run.py script: python3 run.py")
+    print(f"Congratulations! You now have a project set up called {name}!")
+    print("This project can be executed by calling the run.py script:")
+    print("    python3 run.py")
     print(
-        "This project has been set up with pre-commit hooks for code checks and black. To enable these checks in your git checkout run:"
+        "This project has been set up with pre-commit hooks for code checks and black."
     )
-    print("pip install pre-commit")
-    print("pre-commit install")
+    print('First set up your source control environment with "git init" or "hg init".')
+    print("Then enable these checks in your git checkout:")
+    print("    pip install pre-commit")
+    print("    pre-commit install")
     print("To run pre-commit manually, execute:")
-    print("pre-commit run --all-files")
+    print("    pre-commit run --all-files")
