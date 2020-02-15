@@ -85,6 +85,25 @@ setup(
 )
 """
 
+PYPROJ = """[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+'''
+"""
+
 ENTRY = """entry_points={
         'console_scripts': [
             '%%NAME%% = %%NAME%%.scripts:start',
@@ -262,3 +281,12 @@ def mkreadme(hub, name):
     readme_str = f"{eqchars}\n{name.upper()}\n{eqchars}\n"
     with open(path, "w+") as fp:
         fp.write(readme_str)
+
+
+def mkproj(hub):
+    """
+    Create the pyproject.toml file
+    """
+    path = os.path.join(hub.PATH, "pyproject.toml")
+    with open(path, "w+") as fp:
+        fp.write(PYPROJ)
