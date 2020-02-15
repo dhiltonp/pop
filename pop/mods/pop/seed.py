@@ -104,6 +104,34 @@ exclude = '''
 '''
 """
 
+PRECOM = """---
+minimum_pre_commit_version: 1.15.2
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      - id: check-merge-conflict  # Check for files that contain merge conflict strings.
+        language_version: python3
+      - id: trailing-whitespace   # Trims trailing whitespace.
+        args: [--markdown-linebreak-ext=md]
+        language_version: python3
+      - id: mixed-line-ending     # Replaces or checks mixed line ending.
+        args: [--fix=lf]
+        language_version: python3
+      - id: end-of-file-fixer     # Makes sure files end in a newline and only a newline.
+        exclude: tests/fake_.*\.key
+        language_version: python3
+      - id: check-ast             # Simply check whether files parse as valid python.
+        language_version: python3
+      - id: check-yaml
+      - id: check-json
+  -   repo: https://github.com/psf/black
+      rev: stable
+      hooks:
+      - id: black
+        language_version: python3
+"""
+
 ENTRY = """entry_points={
         'console_scripts': [
             '%%NAME%% = %%NAME%%.scripts:start',
@@ -176,6 +204,8 @@ def new(hub):
         hub.pop.seed.mkrun(name)
         hub.pop.seed.mkinit(name)
         hub.pop.seed.mkreadme(name)
+    hub.pop.seed.mkproj()
+    hub.pop.seed.mkprecom()
 
 
 def mkdir(hub, *args):
@@ -290,3 +320,12 @@ def mkproj(hub):
     path = os.path.join(hub.PATH, "pyproject.toml")
     with open(path, "w+") as fp:
         fp.write(PYPROJ)
+
+
+def mkprecom(hub):
+    """
+    Create the precommit file
+    """
+    path = os.path.join(hub.PATH, ".pre-commit-config.yaml")
+    with open(path, "w+") as fp:
+        fp.write(PRECOM)
