@@ -265,3 +265,14 @@ make inside of a Plugin Oriented Programming system.
 
 Remember to make your *Subs* follow patterns to expose a re-usable interface! That will make
 every aspect of your code pluggable!
+
+Plugins Allow for App Merging!
+==============================
+
+We have eluded to App Merging a few times, well, the excitement is finally here! App Merging
+is one of the most powerful aspects of Plugin Oriented Programming, and it is in the next
+chapter.
+
+Now that you know about the `hub`, *Subs*, plugins, and patterns; there is only one more
+high level concept to get familiar with, App Merging. Plugin Oriented Programming apps
+are not just made from plugins, they are plugins! Read on to learn how!
