@@ -206,6 +206,7 @@ def new(hub):
         hub.pop.seed.mkreadme(name)
     hub.pop.seed.mkproj()
     hub.pop.seed.mkprecom()
+    hub.pop.seed.print_post(name)
 
 
 def mkdir(hub, *args):
@@ -329,3 +330,19 @@ def mkprecom(hub):
     path = os.path.join(hub.PATH, ".pre-commit-config.yaml")
     with open(path, "w+") as fp:
         fp.write(PRECOM)
+
+
+def print_post(hub, name):
+    """
+    Print a message after the run to document how to enable
+    things like pre-commit
+    """
+    print(f"Congradualtions! You not have a project set up called {name}!")
+    print("This project can be executed by calling the run.py script: python3 run.py")
+    print(
+        "This project has been set up with pre-commit hooks for code checks and black. To enable these checks in your git checkout run:"
+    )
+    print("pip install pre-commit")
+    print("pre-commit install")
+    print("To run pre-commit manually, execute:")
+    print("pre-commit run --all-files")
