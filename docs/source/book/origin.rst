@@ -16,8 +16,8 @@ Salt's Plugin System and POP
 ============================
 
 The creator of Plugin Oriented Programming, Thomas Hatch, is also the creator of one of
-the world's largest open source projects "Salt". The design of Salt incorporated plugins
-very early in the project and build a reusable plugin system.
+the world's largest open source projects "Salt". The Salt's design incorporated plugins
+very early in the project and built a reusable plugin system.
 
 The pluggable nature of Salt quickly became one of the main driving factors for the
 project, making contributions easy and the platform flexible. Salt's plugin system, called
@@ -43,7 +43,7 @@ work. Thomas at this point realized that he had not just made a plugin library, 
 he had create a programming paradigm. With this realization, Thomas renamed Pack to Pop
 to reflect that the implementation had grown into Plugin Oriented Programming.
 
-At this point Thomas changed how the plugin system worked, yet again, but his time his
+At this point Thomas changed how the plugin system worked yet again, but his time his
 view of the problem set had grown a great deal. Now he was able to overcome many restrictions
 in the design and introduced the concepts around app merging and configuration merging.
 
@@ -56,4 +56,4 @@ Emergence of POP
 
 Plugin Oriented Programming was first released in late 2019 and began to gain a following. This
 book was written in response to more and more people showing interest in Plugin Oriented Programming
-and as the primary reference for the core concepts that make up Plugin Oriented Programming.
+and serves as the primary reference for the core concepts that make up Plugin Oriented Programming.

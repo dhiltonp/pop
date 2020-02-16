@@ -16,7 +16,7 @@ For Plugin Oriented Programming, virtually everything becomes pluggable. But wha
 does it mean to write completely pluggable code? How can a paradigm allow you to
 author completely modular code? What is pluggable into what, and how?
 
-To answer this, it is necessary to explain a number of the concepts of Plugin
+To answer this, it is necessary to explain a number of concepts in Plugin
 Oriented Programming. These concepts will give an introductory foundation for
 what Plugin Oriented programming is and how to train yourself to think in a
 world of plugins.
@@ -46,7 +46,7 @@ interfaces *patterns*.
 Rule 1 of Pluggability
 ----------------------
 
-*Subs* contain *Plugins*, plugins express an interface the is compatible with the
+*Subs* contain *Plugins*, plugins express an interface that is compatible with the
 pattern defined by the *Sub*. If plugins exist inside of a *Sub* that do not adhere to
 the interface of the sub, then they should be placed in another *Sub*. This other
 *Sub* can be new, or an existing *Sub*.
@@ -71,12 +71,12 @@ The *Hub* is the root of the namespace, and each *Sub* is available on the *Hub*
 another *Sub*. Each plugin lives in a *Sub*. Data is stored on the *Hub* so that it can be
 made available to the rest of the application and can be properly tracked.
 
-Variables stored on the *Hub* should be stored nest to the systems that have write access to
+Variables stored on the *Hub* should be stored next to the systems that have write access to
 them. If all plugins in a *Sub* have write access to a variable, then it is stored under the
 *Sub*'s namespace on the *Hub*. If multiple *Subs* need write access to a variable, then those
 *Subs* must be stored within a higher level *Sub* which contains that variable.
 
-Finally, the namespace data, subs, plugins and data should follow naming conventions to
+Finally, the namespace data, subs, plugins, and data should follow naming conventions to
 ensure consistency. Variables on the hub should always be all caps. Functions, *Subs* and
 plugins should always be underscore delimited, all lower case. Class names should always
 be CamelCase. These simple rules ensure that namespace collision probability is low,
@@ -85,7 +85,7 @@ and presents predictable information to the next engineer.
 Rule 1 of Namespace
 -------------------
 
-Variables are stored on the *Hub* relative to the *Subs* and plugins that have write access
+Variables are stored on the *Hub* relative to *Subs* and plugins that have write access
 to the data. Any plugin or *Sub* deeper on the *Hub* than the variable have write access to
 the variable. If a plugin that is not below a variable wants write access, that variable needs
 to first be copied within that plugin's respective namespace.
@@ -107,7 +107,7 @@ from multiple apps.
 This makes entire applications natively pluggable! So long as a few simple rules of App Merging
 are not violated.
 
-Everything goes on the *Hub* if code is intended to be a library then it should be treated
+Everything goes on the *Hub*. If code is intended to be a library then it should be treated
 as such and developed as a standalone codebase that exposes library functionality. All
 code in a Plugin Oriented Programming codebases must exist in the structure of the *Hub*.
 
@@ -121,7 +121,7 @@ because when the Sub is merged into another application it begins functioning. T
 functions and patterns should only be executed at the behest of the merging application.
 
 App Merging exists to allow for applications to be split into small, workable, codebases.
-Then the many codebases can be merged together using a lightweight codebase to bring
+The many codebases can then be merged together using a lightweight codebase to bring
 it all together. Just as *Subs* and plugins should be transferable to a new engineer
 within hours, so must an app. Apps should be small enough that they can be explained
 to a new engineer - to the extent that the new engineer can extend or maintain that *Sub* -

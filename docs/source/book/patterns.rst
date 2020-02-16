@@ -96,7 +96,7 @@ Lets take a look at the `init.py` file for `grains`:
 The __init__ Function
 ---------------------
 
-The `__init__` function is simple, is it should be. It recursively loads and nested *Subs*
+The `__init__` function is simple, as it should be. It recursively loads nested *Subs*
 that have been created and sets up a dict on the `hub` inside of the `grains` namespace.
 Since the `GRAINS` dict is all caps we know it is not a function or a *Sub*, it is a variable.
 The `GRAINS` dict is also location under `hub.grains`. This means that all plugins created on
@@ -105,7 +105,7 @@ the *Sub* are intended to have write access to the `hub.grains.GRAINS` variable.
 The run_sub Function
 --------------------
 
-Next we have the meat of the pattern. The `run_sub` function is simple, it just iterates over
+Next we have the meat of the pattern. The `run_sub` function is simple. It just iterates over
 all of the plugins exposed in a *Sub* and calls them! If they are a coroutine then they get
 awaited in a batch. But the end result is simple, any plugin that is added will get called
 when the pattern is executed.
@@ -113,13 +113,13 @@ when the pattern is executed.
 A Grains Plugin
 ---------------
 
-Now that we have the pattern down, lets say that we add another file to the *Sub* called
+Now that we have the pattern down, let's say that we add another file to the *Sub* called
 `test.py`:
 
 .. code-block:: python
 
     async def test(hub):
-        hub.grains.GRAINS['test'] = True
+        hub.grains.GRAINS["test"] = True
 
 An Extensible Pattern
 ---------------------
@@ -156,20 +156,20 @@ Beacon Pattern
 ==============
 
 The beacon pattern is used to gather events. In this example we will make a simple
-cryptocurrency tracker. The *Sub* int his example will be called `beacons`, it uses
+crypto-currency tracker. The *Sub* int his example will be called `beacons`, it uses
 an asyncio queue to collect and store data. This would be a simple *init.py*:
 
 .. code-block:: python
 
     async def start(hub):
-        '''
+        """
         Start the beacon listening process
-        '''
+        """
         gens = []
         for mod in hub.beacons:
-            if not hasattr(mod, 'listen'):
+            if not hasattr(mod, "listen"):
                 continue
-            func = getattr(mod, 'listen')
+            func = getattr(mod, "listen")
             gens.append(func())
         async for ret in hub.pop.loop.as_yielded(gens):
             await hub.beacons.QUE.put(ret)
@@ -190,12 +190,12 @@ Following this pattern a plugin that emits a beacon could subsequently look like
     async def listen(hub):
         while True:
             async with aiohttp.ClientSession() as session:
-                async with session.get('https://api.cryptonator.com/api/full/btc-usd') as resp:
+                async with session.get("https://api.cryptonator.com/api/full/btc-usd") as resp:
                     yield(resp.json())
             await asyncio.sleep(5)
 
 Now we have a bitcoin ticker. More modules could act as means to gather data about other
-cryptocurrencies. The pattern expressed here makes tracking more coins easy and allows for a
+crypto-currencies. The pattern expressed here makes tracking more coins easy and allows for a
 separate *Sub* to process the collected data.
 
 This pattern shows the concept of exposing reusable interfaces in a great way. This example
@@ -209,7 +209,7 @@ Flow Pattern
 The flow pattern is used for flow based interfaces. This follows an async pattern where
 data is queued and passed into and/or out of the subsystem. This is an excellent
 pattern for applications that do data processing. Data can be loaded into the pattern,
-processed and sent forward to the next interface for processing. This pattern is used to
+processed, and sent forward to the next interface for processing. This pattern is used to
 link together multiple flow subsystems or to take data from a beacon or collection
 pattern and process it.
 
@@ -223,7 +223,7 @@ subsystem.
     async def start(hub, mod):
         while True:
             data = await hub.beacons.QUE.get()
-            ret = await getattr(f'flows.{mod}.process'){data}
+            ret = await getattr(f"flows.{mod}.process"){data}
             await hub.flows.QUE.put(ret)
 
 Using a flow pattern makes pipe-lining concurrent data fast and efficient. For a more elegant
@@ -242,13 +242,13 @@ like this:
 
     def start(hub):
         app = asyncio.web.Application()
-        app.add_routes([asyncio.web.get('/', hub._.router)])
+        app.add_routes([asyncio.web.get("/", hub._.router)])
         aiohttp.web.run_app(app)
 
     async def router(hub, request):
         data = request.json()
-        if 'ref' in data:
-            return web.json_response(getattr(hub.server, data['ref'])(**data.get('kwargs')))
+        if "ref" in data:
+            return web.json_response(getattr(hub.server, data["ref"])(**data.get("kwargs")))
 
 This example assumes that the sender is sending a json payload with 2 keys, one called "ref"
 to reference the function on the `hub` and another called "kwargs" so that any arguments
@@ -259,8 +259,8 @@ Now the plugin subsystem can be populated with modules that expose request funct
 Just Examples
 =============
 
-There are many ways to create patters, these examples are not intended to be a document of all
-available patterns, but instead to just get you thinking about what kinds of patterns you can
+There are many ways to create patterns. These examples are not intended to be a document of all
+available patterns, but are meant to get you thinking about what kinds of patterns you can
 make inside of a Plugin Oriented Programming system.
 
 Remember to make your *Subs* follow patterns to expose a re-usable interface! That will make

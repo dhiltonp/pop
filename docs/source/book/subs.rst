@@ -16,16 +16,16 @@ Subs Contain Plugins
 
 On the surface, *Subs* appear to simply contain plugins, but this is similar
 to classes on the surface, as they appear to just contain data and functions.
-But like classes in OOP, *Subs* are the canvas for the developer, allowing for the
+Like classes, *Subs* are a canvas for the developer, allowing for the
 complexity of the software to be simplified into reusable, flexible, compartments.
-While the *Sub* is comparable in criticality to classes in OOP, it should not be
+While the *Sub* is comparable to the criticality of classes in OOP, it should not be
 confused with classes! Plugin Oriented Programming does not have a concept
 inheritance for instance.
 
 When a *Sub* is created it gets placed on the hierarchical namespace - the `hub` -
 so that any application can call into functions and data exposed by the *Sub*.
 
-The *Sub's* primary purpose is to present plugins. The plugins are individual
+The *Sub*'s primary purpose is the present plugins. The plugins are individual
 files containing tight code compartments that express an interface.
 
 Adding Subs to a hub
@@ -33,11 +33,11 @@ Adding Subs to a hub
 
 Once a `hub` is available then it is easy to add a *Sub* to the `hub`. Keep in
 mind that there are many ways to construct a *Sub*. In the end a *Sub*
-only needs to be a directory with `.py` files in it, nothing more. With that
-said though, there are many ways to identify how to find the directory, or
+only needs to be a directory with .py files in it, nothing more. With that
+said, there are many ways to identify how to find the directory, or
 directories!
 
-But do not despair, `pop` presents many flexible options, but retains a strong
+But do not despair. `pop` presents many flexible options, but retains a strong
 opinion about how to do things right.
 
 Using Dynamic Names
@@ -58,11 +58,11 @@ found at `poppy/conf.py` AKA `<Project name>/conf.py`:
     }
 
 The `conf.py` will already exist, `pop-seed` creates it. When you add a **DYNE**
-entry to the `conf.py` it registers that under this project plugins for the *Sub*
-- in this case named `rpc` - can be found.
+entry to the `conf.py`, it registers that under this project's plugins for the *Sub*
+- in this case named `rpc` - where it can be found.
 
-This means that multiple codebases can contribute plugins to the *Sub*! This means
-that third party developers can easily extend your *Sub* without modifying
+This means that multiple codebases can contribute plugins to the *Sub*!
+Very easily, third party developers can extend your *Sub* without modifying
 your code to do it! This is one of the most powerful aspects of Plugin Oriented
 Programming called *Vertical App Merging*.
 
@@ -73,9 +73,9 @@ Now that your *Sub* is registered, it can be added to a `hub` by calling
 
     hub.pop.sub.add(dyne_name="rpc")
 
-Since the `hub` is available anywhere in your application, this can be called from
+Since the `hub` is available anywhere in your application, it can be called from
 anywhere. A plugin can add a new *Sub*, this is a core design consideration of
-Plugin Oriented Programming, a plugin cannot be a dead end, it needs to be able
+Plugin Oriented Programming. A plugin cannot be a dead end, it needs to be able
 to always add globally available *Subs* onto the `hub`.
 
 Using PyPath
@@ -85,7 +85,7 @@ Using the `pypath` system in `pop` is the simplest way to add a *Sub* to your `h
 but it does not activate *Vertical App Merging*.
 
 Using `pypath` is simple, just call `hub.pop.sub.add` and pass in the python import
-path that, when imported, will lead the way to the directory with plugins.
+path that, when impoerted, will lead the way to the directory with plugins.
 
 .. code-block:: python
 
@@ -111,23 +111,23 @@ subdirectories exist they will be found and loaded onto the `hub` as nested *Sub
 Plugin Loading
 ==============
 
-By default plugins in `pop` are lazy loaded, they only get imported when they are
-first accessed. This greatly speeds up the creation of a *Sub* because if a *Sub*
-contained hundreds of plugins then it would take as much as a few seconds to load
+By default, plugins in `pop` are lazy loaded. They only get imported when they are
+first accessed. This greatly speeds up the creation of a *Sub*. If a *Sub*
+contained hundreds of Plugins then it would take only a few seconds to load
 all of the modules therein.
 
 Sometimes it may be desirable to pre-load all of your plugins, to do this just call
 `hub.pop.sub.load_all(hub.subname)`.
 
-Some events will trigger loading all plugins, in particular if you decide to iterate
+Some events will trigger loading all plugins. In particular if you decide to iterate
 over a *Sub* then the `load_all` call will be executed on the *Sub* if it has not been
-already, therefore ensuring that all plugins are loaded and can be cleanly iterated
+called already, therefore ensuring that all plugins are loaded and can be cleanly iterated
 over.
 
 The init System
 ===============
 
-Now that your *Sub* is on your hub, lets take a look at the *Init* system used
+Now that your *Sub* is on your hub, let's take a look at the *Init* system used
 by `pop`. This system allows you to initialize your new *Sub*. In a nutshell
 you can place an optional plugin in your *Sub* named `init.py` and this plugin
 will be automatically loaded when your *Sub* gets created. Think of the `init.py`
