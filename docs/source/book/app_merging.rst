@@ -96,12 +96,12 @@ you having to review their code, or maintain their code. This is helpful on many
 Valuable Time
 -------------
 
-The best judge of code viability is public use, but large amounts of code is merged
+The best judge of code viability is public use. Large amounts of code are merged
 into widely used projects every day. The result is that the head of a software project
 must review all code that is submitted to their project.
 
 Your time, as a head of a project, is FAR more valuable being used authoring new
-features and capabilities, than being consumed in code reviews. The world's best
+features and capabilities than being consumed in code reviews. The world's best
 developers are robbed from their trade on an ongoing basis, by needing to review
 and more often than not reject, code that they never wanted in the project to begin
 with.

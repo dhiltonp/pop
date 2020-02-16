@@ -5,19 +5,19 @@ POP, What it Seeks to Solve
 Plugin Oriented Programming seeks to bring together concepts and wisdom from the
 history of computing in new ways to solve modern computing problems. To introduce
 Plugin Oriented Programming, it is necessary to first cover the problems
-in computing today, and where they came from. It is also important to answer the
-question of "why". Why is introducing a new programming paradigm today the
+in computing today and where they came from. It is also important to answer the
+question of "why"; Why is introducing a new programming paradigm today the
 answer to these problems?
 
 Software development operates on a much larger scale today than ever in the history
 of the practice. In fact, software development operates on a scale much larger
-that any engineering practice in the history of the world. Our economy, applications,
+than any engineering practice in the history of the world. Our economy, applications,
 devices and more, run on top of innumerable years of engineering effort.
 
 The magnitude of what has been created makes the great wonders of the world that
-have come before seem small in size. The pyramid of Giza, the international road network,
+have come before seem small in comparison. The pyramid of Giza, the international road network,
 the power grid, and many more feats, pale in comparison to the vast collection of
-software engineering that has been and continues to be created day by day.
+software engineering that has been and continues to be architected day by day.
 
 The result is countless tracks of software, applications beyond human reckoning.
 
@@ -31,14 +31,14 @@ A Brief History
 ===============
 
 Software engineering started in a theoretical space as the first computers were
-developed with the primary purpose of executing math, breaking and creating codes
+developed with the primary purpose of executing math; breaking and creating codes
 and encryption. As time moved on databases became a critical component of
 computing, storing and crunching datasets became the territory of large
 organizations.
 
 This time period saw computers move from rooms of vacuum tubes into mainframes.
 Applications were all driven on command line interfaces and written in procedural
-and functional code. Languages that were close to the system and designed for math
+and functional code. Languages were close to the system and designed for math
 dominated software engineering. Some of the largest and most complex endeavors were
 Operating Systems and Databases.
 
@@ -46,42 +46,42 @@ Multics, and Unix
 -----------------
 
 In the 1960s the goal of creating an Operating System became the dream of
-many organizations, MIT, GE and Bell Labs collaborated to create an OS called
-Multics. Many of the ideas around Operating systems were developed, but in the
+many organizations. MIT, GE and Bell Labs collaborated to create an OS called
+"Multics". Many of the ideas around Operating systems were developed, but in the
 end Multics did not take root.
 
 In 1969 a new Operating System was developed by Ken Thompson and Dennis Ritchie.
 This system was called Unix and was inspired in large part by Multics. The Unix
 Operating System lives on today in newer incarnations, primarily in Linux, but
-the Unix OS concepts are also at the core of almost all major modern Operating systems,
-such as MacOS.
+the Unix OS concepts are also at the core of almost all major modern Operating systems
+(such as MacOS).
 
 The Unix Philosophy
 -------------------
 
-Ken Thompson and Dennis Ritchie knew that Multics had tried to be too complicated
-and created a system that was too difficult to maintain, so they created a simple
+Ken Thompson and Dennis Ritchie knew that Multics was too complicated and inadvertently
+created a system that was too difficult to maintain. So they created a simple
 philosophy of software development for applications on Unix.
 
 I will use Peter H. Salus' version of the Unix Philosophy to explain it here:
 
-Write programs that do one thing and do it well.
-Write programs to work together.
-Write programs to handle text streams, because that is a universal interface.
+* Write programs that do one thing and do it well.
+* Write programs to work together.
+* Write programs to handle text streams, because that is a universal interface.
 
 This philosophy created the ecosystem of software that is the foundation for
-most of the world's software today, but as we will see, it was not followed
-into the 1990s, and computing hit consumers, and the world changed.
+most of the world's software today. However, we will see that it was not followed
+into the 1990s when computing hit consumers, and the world changed.
 
 Windows and the GUI
 -------------------
 
 In the early 1990s we saw the emergence of a new kind of computer, a
-*Personal Computer*. A computer that fit on a desk and was meant to solve
+*Personal* Computer. A computer that fit on a desk and was meant to solve
 the problems of an individual, rather than the problems of banks, governments,
 and corporations.
 
-The personal computer changed how applications were made, now the Graphical User
+The personal computer changed how applications were made. Now the Graphical User
 Interface, or GUI, became king. The GUI mandated that a new type of application needed
 to be developed, one that is more familiar to modern computer users.
 
@@ -89,14 +89,14 @@ GUIS and Windows diverged from the Unix philosophy and introduced more than trad
 text streams. Data became more complex, as did applications.
 
 In this era a programming paradigm became dominant, one that worked very well at
-creating GUIs, Object Oriented Programming, also called OOP. The ideas around OOP had
+creating GUIs, Object Oriented Programming (also called OOP). The ideas around OOP had
 existed for many years, but the GUI gave them new life! It became much easier to build
 graphical applications when the aspects of the applications could be represented as
 *objects*.
 
 Many traditional software developers railed against OOP, saying that it would create
 dirty and difficult to manage code. But OOP brought many merits to Graphical applications
-and OOP made it easier to reuse other developers' code in new ways.
+such as making it easier to reuse other developers' code in new ways.
 
 Rather than transferring data between programs on a command line shell using text streams,
 GUIs needed to be able to manage much more complicated datasets. This gave rise to new
@@ -112,7 +112,7 @@ in the 1990s. With the rise of Windows and the GUI this only made sense.
 OOP created a new set of rules and ideas around software development. What was once
 simply creating small compact functions that are called in sequence to execute
 data management and mathematical tasks, OOP changed the landscape. Introducing many
-new development models and concepts, such an inheritance and polymorphism. Code became
+new development models and concepts, such as inheritance and polymorphism. Code became
 all about making objects that represented standalone entities.
 
 But what is the origin of OOP? Where did these ideas come from? OOP is deeply rooted
@@ -133,9 +133,9 @@ The days of personal computing have evolved into the current world, but software
 remains in large part a combination of the concepts of the past.
 
 Since the 90's, the internet has become the dominant stage for software development.
-The worlds of back end computation and graphical environments have merged together. The
-code that used to be relatively thin in desktop applications, the back end code, has become
-vast, on a scale that was once unimaginable, with millions of servers running massive
+The worlds of back-end computation and graphical environments have merged together. The
+code that used to be relatively thin in desktop applications, the back-end code, has become
+vast; on a scale that was once unimaginable, with millions of servers running massive
 volumes of code. The GUIS have changes as well, with the new canvas being a web browser
 and phone apps.
 
@@ -145,16 +145,16 @@ data center.
 
 This new combination has also given rise to a new way of software development. When code
 is developed in the open, it no longer needs to be developed in an office. It is
-developed with the world as its canvas.
+developed with the world as it's artist.
 
 The World of Today
 ==================
 
 The world of today presents many unique challenges. Gone are the days of the desktop
-applications dominance, the back ends of the web run almost entirely on the modern incarnation
+application's dominance, the back-ends of the web run almost entirely on the modern incarnation
 of Unix, called Linux. The current world only exists because of Open Source and free
-software, with a giant collection of free software to work with it becomes viable to
-express new concepts and ideas in code in cost effective ways.
+software. With a giant collection of free software to work with, it becomes viable to
+express new concepts and ideas with code in cost effective ways.
 
 Rather than seeing a revolution in software from new concepts like we saw in the 90s,
 the world of today is a combination of almost all of the innovations that the world has
@@ -166,20 +166,20 @@ The Problems of Today
 =====================
 
 Much of the history of computing was skipped in this brief review, but it aims to set up
-the issues we face today. There are a few of many areas that are worth addressing.
+the issues we face today. There are many areas that are worth addressing.
 
 OOP was not made for Today's Problems
 -------------------------------------
 
 OOP was created from the bottom up. It has many brilliant concepts, but it was created
-to solve issues with writing programming languages and came of age with Java, C++ and
+to solve issues with writing programming languages. It came of age with Java, C++ and
 the rise of the desktop computer and desktop GUI.
 
 The objections of older Unix era developers (whose code we still use) ring more true today
 than ever before. Most code is overly complex and brittle. Monolithic and large software
 discards the wisdom of the Unix Philosophy, rather than seeking to extend it.
 
-Today's problems are a combination of back end issues, distributed computing, distributed
+Today's problems are a combination of back-end issues, distributed computing, distributed
 development, and a new class of GUI that is not driven by the old rules of the personal
 computer.
 
@@ -190,14 +190,14 @@ Open Source creates new and unique challenges. We all rely on software that is n
 supported monetarily. The economics of Open Source have not panned out in ways that allow
 it to be developed with the original goals in mind. Open Source has also diverged from
 the Unix Philosophy. Early on it was all about making small applications, programs that
-can be maintained by just a few engineers in their spare time. But recently Open Source
+can be maintained by just a few engineers in their spare time. But recently, Open Source
 software has been driven by corporate interest and venture capital, creating large,
 monolithic application stacks.
 
 Finally, there is the problem of the Open Source developer. Many of the best and most
 capable developers in the world today have written Open Source platforms that power
-the world, but they have only so often become slaves to their creations. More often
-than not, they are not proportionally rewarded for the work they have done and they become
+the world. But they so often only become slaves to their creations. More often
+than not, they are not proportionally rewarded for the work they have done and become
 bogged down in maintaining communities of contributors rather than creating more
 software.
 
@@ -205,7 +205,7 @@ The Pull Request
 ----------------
 
 Senior software developers quickly become enveloped in code review, rather than code
-creation. The best developers jobs turn from brilliance to gatekeepers. Linus Torvalds
+creation. The best developer's jobs turn from brilliance to gatekeepers. Linus Torvalds
 said that he no longer writes code, rather his job is to say "no". He is one of the most
 brilliant developers in world, but his success has taken him from his profession.
 
@@ -217,7 +217,7 @@ robs them of the joy they once found in the act of creation.
 Testing Slows Down Development
 ------------------------------
 
-Code needs to be tested and verified. This become seven more critical in distributed
+Code needs to be tested and verified. This become even more critical in distributed
 development teams and Open Source projects, as the reliability of the contributors
 code and willingness to maintain that code falls under question.
 
@@ -232,7 +232,7 @@ Most of the modern code available today is complex to deploy and manage. Many
 applications needing to work in concert in a brittle infrastructure creates
 issues with infrastructure management. These issues are so bad that we have
 spent the years between 2010 and 2020 reinventing how code should be deployed
-time and time again, on;y introducing more and more complicated code management
+time and time again, only introducing more and more complicated code management
 models.
 
 The Mythical Man Month
@@ -244,7 +244,7 @@ yield proportional returns.
 
 As codebases get larger and more monolithic, more engineers are needed to maintain them.
 But those codebases get harder and harder to improve! The large teams produces less and
-less new product and stagnation rules. The best engineers get bogged down in holding
+less new product -- stagnation rules. The best engineers get bogged down in holding
 up monoliths, rather than building new code.
 
 Plugin Oriented Programming
@@ -255,31 +255,31 @@ past and applying that wisdom to the issues of today.
 
 We start by taking the Unix Philosophy, and modernizing it:
 
-Write programs that do one thing and do it well.
-Write programs to work together.
-Write programs to handle text streams, because that is a universal interface.
+* Write programs that do one thing and do it well.
+* Write programs to work together.
+* Write programs to handle text streams, because that is a universal interface.
 
 Becomes...
 
-Write programs that do one thing and do it well.
-Write programs to work together.
-Write programs to expose interfaces that can be easily merged together.
+* Write programs that do one thing and do it well.
+* Write programs to work together.
+* Write programs to expose interfaces that can be easily merged together.
 
 It hardly changes, only the definition of interfaces need to be updated
-to deal with data more complex that what is found in a text stream.
+to deal with more complex data than what is found in a text stream.
 
-Lets evaluate these concepts one by one from a POP perspective.
+Let's evaluate these concepts one by one from a POP perspective.
 
 Write programs that do one thing and do it well
 -----------------------------------------------
 
-POP is built to allow developers to write units of code in smaller, manageable
+POP is built to allow developers to write units of code in smaller, more manageable
 applications. But those units still function as fully capable applications.
 
 This overcomes the *Mythical Man Month* by making sure that code is always
 broken up into small units that can be managed by small developer teams.
 This also makes handing off code to new developers much easier. Learning
-a new codebase is exponential relative tot he size of the codebase. Something
+a new codebase is exponential relative to the size of the codebase. Something
 that is only 5-20 thousand lines of code can be handed off in days, but it can take
 years to transfer code that is closer to a hundred thousand lines or more.
 
@@ -303,18 +303,18 @@ POP builds applications that can be universally merged together. This means that
 multiple applications can be merged together into one larger application. We write
 monolithic code for good reasons, it is easier to deploy, and some problems
 are large problems to solve. POP allows for monolithic code to be developed
-in pluggable ways and them merged into the monolith for easy use and deployment.
+in pluggable ways and then merged into the monolith for easy use and deployment.
 
 This means that the purpose of POP applications is so that they can work
 together through POP's concept of app merging.
 
-Write programs to expose interfaces that can be easily merged together.
------------------------------------------------------------------------
+Write programs to expose interfaces that can be easily merged together
+----------------------------------------------------------------------
 
 POP allows applications to be written in such a way that they can run
 alone or as a part of a larger application. This is done by building
-apps to that they expose simple interfaces. Sometimes these interfaces
-are simple function calls, of they are data queues that receive or output
+apps that expose simple interfaces. Sometimes these interfaces
+are simple function calls, or they are data queues that receive output
 data.
 
 These simple interfaces allow for app merging and the creation of
@@ -322,7 +322,7 @@ larger applications that are themselves just small bridges between collections
 of small applications.
 
 Finally, POP applications can all be deployed as single binary deployments.
-This solves the complex deployment problem, always making code easy to
+This solves the complex deployment problem -- always making code easy to
 distribute.
 
 How Does POP Do This?
