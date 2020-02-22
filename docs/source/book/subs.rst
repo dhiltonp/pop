@@ -33,7 +33,7 @@ Adding Subs to a hub
 
 Once a `hub` is available then it is easy to add a *Sub* to the `hub`. Keep in
 mind that there are many ways to construct a *Sub*. In the end a *Sub*
-only needs to be a directory with .py files in it, nothing more. With that
+only needs to be a directory with *.py* files in it, nothing more. With that
 said, there are many ways to identify how to find the directory, or
 directories!
 
@@ -113,8 +113,8 @@ Plugin Loading
 
 By default, plugins in `pop` are lazy loaded. They only get imported when they are
 first accessed. This greatly speeds up the creation of a *Sub*. If a *Sub*
-contained hundreds of Plugins then it would take only a few seconds to load
-all of the modules therein.
+contained hundreds of Plugins then it would take some time to load all of the plugins,
+typically a few seconds, lazy loading allows this time consumption to be bypassed.
 
 Sometimes it may be desirable to pre-load all of your plugins, to do this just call
 `hub.pop.sub.load_all(hub.subname)`.
@@ -139,7 +139,7 @@ The __init__ Function
 =====================
 
 Just like Classes in Python, plugins in `pop` can be initialized. Just create an
-optional function called `__init__`. This function will be called when the plugin
+**optional** function called `__init__`. This function will be called when the plugin
 gets loaded.
 
 Also, as in Python classes, the `__init__` function should not be used to call

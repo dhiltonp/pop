@@ -21,7 +21,9 @@ Getting Stated With the Hub
 ===========================
 
 The `hub` is the root of a `pop` project. Before we can start working with
-`pop` we must first create the `hub`. Normally, when using `pop-seed` you don't
+`pop` we must first create the `hub`. `pop` ships with a tool called `pop-seed`
+which is used to build the structure of an application, makign it easy to get
+started. Normally, when using `pop-seed` you don't
 even need to consider where the `hub` comes from (as `pop-seed` creates the
 `hub` for you in the startup scripts). But this document is intended for
 understanding, so lets look at a `pop` app from the ground up.

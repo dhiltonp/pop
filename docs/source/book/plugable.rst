@@ -2,7 +2,7 @@
 Define "Pluggable"
 ==================
 
-This section deinfes what makes code plugable, some of the concepts here will
+This section defines what makes code pluggable, some of the concepts here will
 be new to you, that is OK. A programming paradigm cannot be created without
 exposing a number of concepts and terms. Many of these terms are explained
 in much greater depth later in the text. Knowing the basics around the
@@ -18,7 +18,7 @@ author completely modular code? What is pluggable into what, and how?
 
 To answer this, it is necessary to explain a number of concepts in Plugin
 Oriented Programming. These concepts will give an introductory foundation for
-what Plugin Oriented programming is and how to train yourself to think in a
+what Plugin Oriented Programming is and how to train yourself to think in a
 world of plugins.
 
 These concepts will also define how to avoid breaking pluggablity. Each layer
@@ -86,9 +86,9 @@ Rule 1 of Namespace
 -------------------
 
 Variables are stored on the *Hub* relative to *Subs* and plugins that have write access
-to the data. Any plugin or *Sub* deeper on the *Hub* than the variable have write access to
-the variable. If a plugin that is not below a variable wants write access, that variable needs
-to first be copied within that plugin's respective namespace.
+to the data. Any plugin or *Sub* deeper on the *Hub* than the variable has write access to
+the variable, by convention. If a plugin that is not below a variable wants write access,
+that variable needs to first be copied within that plugin's respective namespace.
 
 Rule 2 of Namespace
 -------------------
@@ -124,14 +124,14 @@ App Merging exists to allow for applications to be split into small, workable, c
 The many codebases can then be merged together using a lightweight codebase to bring
 it all together. Just as *Subs* and plugins should be transferable to a new engineer
 within hours, so must an app. Apps should be small enough that they can be explained
-to a new engineer - to the extent that the new engineer can extend or maintain that *Sub* -
+to a new engineer - to the extent that the new engineer can extend or maintain that *App* -
 within one to few days. If this cannot be done, then a new app should be created to
 partition out and isolate the next chunk of code.
 
 Rule 1 of App Merging
 ---------------------
 
-Everything on the *Hub*. Writing library code outside of the *Hub* should be relegated to
+Everything needs to exist on the *Hub*. Writing library code outside of the *Hub* should be relegated to
 a separate codebase.
 
 Rule 2 of App Merging

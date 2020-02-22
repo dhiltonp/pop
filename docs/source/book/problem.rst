@@ -334,10 +334,17 @@ How Does Plugin Oriented Programming Do This?
 =============================================
 
 This book is designed to introduce you to this new and growing way of thinking
-and developing. POP introduces new concepts like hierarchical namespaces,
+and developing. Plugin Oriented Programming introduces new concepts like hierarchical namespaces,
 app merging, configuration unification, dynamic code discovery and more to
 build a paradigm and an ecosystem that drives towards a future of more efficient
 and rapid development.
+
+Plugin oriented Programming has been implemented in a project called `pop`.
+The `pop` project is written in Python, is easy to learn and extends the already
+vast Python ecosystem.
+
+Plugin Oriented Programming can theoretically be implemented on multiple programming
+languages or as a central hallmark of a programming language.
 
 Read on to discover the new world of application development,
 Plugin Oriented Programming.
