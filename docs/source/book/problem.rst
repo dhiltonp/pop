@@ -6,7 +6,7 @@ Plugin Oriented Programming seeks to bring together concepts and wisdom from the
 history of computing in new ways to solve modern computing problems. To introduce
 Plugin Oriented Programming, it is necessary to first cover the problems
 in computing today and where they came from. It is also important to answer the
-question of "why"; Why is introducing a new programming paradigm today the
+question of "why". Why is introducing a new programming paradigm today the
 answer to these problems?
 
 Software development operates on a much larger scale today than ever in the history
@@ -17,15 +17,19 @@ devices and more, run on top of innumerable years of engineering effort.
 The magnitude of what has been created makes the great wonders of the world that
 have come before seem small in comparison. The pyramid of Giza, the international road network,
 the power grid, and many more feats, pale in comparison to the vast collection of
-software engineering that has been and continues to be architected day by day.
+software engineering that has been and continues to be written day by day.
 
-The result is countless tracks of software, applications beyond human reckoning.
+The result is countless tracks of software, lines of code beyond human reckoning.
 
 The vast array of software available today creates new problems and challenges that
 cannot be addressed with existing engineering techniques. The nature of software
-engineering has shifted dramatically over the last 50 years, transferring from
+engineering has shifted dramatically over the last 50 years, beginning with academia and government, shifting to
 large corporate endeavors, to small companies and teams, to globally distributed
 software engineering.
+
+With these shifts, it is now an excellent time to fundamentally revisit programming
+paradigms. The systems used today were developed in the distant past, in a world
+where today's challenges did not exist.
 
 A Brief History
 ===============
@@ -53,7 +57,7 @@ end Multics did not take root.
 In 1969 a new Operating System was developed by Ken Thompson and Dennis Ritchie.
 This system was called Unix and was inspired in large part by Multics. The Unix
 Operating System lives on today in newer incarnations, primarily in Linux, but
-the Unix OS concepts are also at the core of almost all major modern Operating systems
+the Unix OS concepts are also at the core of almost all major modern Operating Systems
 (such as MacOS).
 
 The Unix Philosophy
@@ -100,8 +104,8 @@ such as making it easier to reuse other developers' code in new ways.
 
 Rather than transferring data between programs on a command line shell using text streams,
 GUIs needed to be able to manage much more complicated datasets. This gave rise to new
-ways to store data outside of databases. The days of XML began, and transferring large,
-structured datasets between applications began.
+ways to store data outside of databases. The days of XML began to take hold, and transferring large,
+structured datasets between applications grew.
 
 Object Oriented Programming
 ---------------------------
@@ -129,17 +133,17 @@ again.
 The Rise of the Web, SaaS, and Open Source
 ------------------------------------------
 
-The days of personal computing have evolved into the current world, but software development
+The days of personal computing has evolved into the current world, but software development
 remains in large part a combination of the concepts of the past.
 
-Since the 90's, the internet has become the dominant stage for software development.
+Since the 1990's, the internet has become the dominant stage for software development.
 The worlds of back-end computation and graphical environments have merged together. The
 code that used to be relatively thin in desktop applications, the back-end code, has become
 vast; on a scale that was once unimaginable, with millions of servers running massive
 volumes of code. The GUIS have changes as well, with the new canvas being a web browser
 and phone apps.
 
-This entire structure is also run, in huge part, by Open Source Code. Code that is freely
+This entire structure is also run, in huge part, by Open Source code. Code that is freely
 given away, and whose development has enabled the modern cell phone market and the modern
 data center.
 
@@ -151,12 +155,12 @@ The World of Today
 ==================
 
 The world of today presents many unique challenges. Gone are the days of the desktop
-application's dominance, the back-ends of the web run almost entirely on the modern incarnation
+application's dominance, the back-ends of the web run almost entirely on the dominant, modern incarnation
 of Unix, called Linux. The current world only exists because of Open Source and free
 software. With a giant collection of free software to work with, it becomes viable to
 express new concepts and ideas with code in cost effective ways.
 
-Rather than seeing a revolution in software from new concepts like we saw in the 90s,
+Rather than seeing a revolution in software from new concepts like we saw in the 1990s,
 the world of today is a combination of almost all of the innovations that the world has
 seen over the last 50 years.
 
@@ -207,7 +211,8 @@ The Pull Request
 Senior software developers quickly become enveloped in code review, rather than code
 creation. The best developer's jobs turn from brilliance to gatekeepers. Linus Torvalds
 said that he no longer writes code, rather his job is to say "no". He is one of the most
-brilliant developers in world, but his success has taken him from his profession.
+brilliant developers in world, but his success has taken him from his profession and from
+his art.
 
 Modern code contributions have become so easy, that they flood core developers and
 mandate that they review others' code rather than work on it themselves. This drives
@@ -217,8 +222,8 @@ robs them of the joy they once found in the act of creation.
 Testing Slows Down Development
 ------------------------------
 
-Code needs to be tested and verified. This become even more critical in distributed
-development teams and Open Source projects, as the reliability of the contributors
+Code needs to be tested and verified. This becomes even more critical in distributed
+development teams and Open Source projects, as the reliability of the contributors'
 code and willingness to maintain that code falls under question.
 
 Testing becomes more and more onerous as codebases become rapidly larger. Code bases
@@ -291,7 +296,7 @@ or refactored.
 Finally, plugin based development allows for code to be externally extended. This
 means that a small application can be extended easily through external plugins.
 This solves the Pull Request problem. External developers can write code that
-runs in the context of another app, but can be maintained and tested separately.
+runs in the context of another application, but can be maintained and tested separately.
 
 This allows codebases to be developed in such a way that small teams can operate
 in an isolated way while extending another team's code.
@@ -299,19 +304,19 @@ in an isolated way while extending another team's code.
 Write Programs The Work Together
 --------------------------------
 
-POP builds applications that can be universally merged together. This means that
+Plugin Oriented Programming builds applications that can be universally merged together. This means that
 multiple applications can be merged together into one larger application. We write
 monolithic code for good reasons, it is easier to deploy, and some problems
-are large problems to solve. POP allows for monolithic code to be developed
+are large problems to solve. Plugin Oriented Programming allows for monolithic code to be developed
 in pluggable ways and then merged into the monolith for easy use and deployment.
 
-This means that the purpose of POP applications is so that they can work
-together through POP's concept of app merging.
+This means that the purpose of Plugin Oriented applications is so that they can work
+together through Plugin Oriented Programming's concept of app merging.
 
 Write programs to expose interfaces that can be easily merged together
 ----------------------------------------------------------------------
 
-POP allows applications to be written in such a way that they can run
+Plugin Oriented Programming allows applications to be written in such a way that they can run
 alone or as a part of a larger application. This is done by building
 apps that expose simple interfaces. Sometimes these interfaces
 are simple function calls, or they are data queues that receive output
@@ -325,8 +330,8 @@ Finally, POP applications can all be deployed as single binary deployments.
 This solves the complex deployment problem -- always making code easy to
 distribute.
 
-How Does POP Do This?
-=====================
+How Does Plugin Oriented Programming Do This?
+=============================================
 
 This book is designed to introduce you to this new and growing way of thinking
 and developing. POP introduces new concepts like hierarchical namespaces,
