@@ -23,7 +23,7 @@ execute and scale. This is a difficult feat! The mere nature of scaling
 software is deeply complicated.
 
 App Merging seeks to solve this problem. Making complex systems work is based
-on the creation of reusable components that can be put together in grad ways.
+on the creation of reusable components that can be put together in simple ways.
 When making a large building almost every component of the building already
 exists and can be purchased without customization. The new building will require
 some custom components, and a few new ones, but the vast majority of them will
@@ -52,7 +52,7 @@ write code in two distinct worlds, why not just make a world where everything is
 pluggable?
 
 There are a few more considerations to *Horizontal App Merging*. If it were so
-simple then it would have been solved years ago! The main issue we have it
+simple then it would have been solved years ago! The main issue we have is
 application startup and configuration. Apps need to be configured! Plugin
 Oriented Programming solves this issue as well. If apps need configuration
 to be applied during startup then the interface for multiple apps to get
@@ -69,10 +69,10 @@ namespace.
 When setting up configuration from applications information needs to be taken
 from multiple sources and applied in the correct order. Command line flags,
 configuration files, defaults, and environment data all need to be accounted
-for. Defaults are over ridden by config files, which are overridden by
+for. Defaults are overridden by configuration files, which are overridden by
 environment data, which are overridden by command line flags.
 
-The gathered configuration data is then added to the `hub` in dict called `OPT`.
+The gathered configuration data is then added to the `hub` in a dict called `OPT`.
 Each application's configuration is then stored in `OPT` under the name of the
 application that defined the configuration parameter. The `conf.integrate` system
 also allows for configuration collisions to be taken care of. This allows for
@@ -125,3 +125,18 @@ been forced to be a gatekeeper, different groups can operate independently. They
 can grow independently, and prove their merit as developers independently. This
 drives better code, more development for engineers and allows the best engineers to
 do what they love, be an engineer.
+
+App Merging is Simple
+=====================
+
+App Merging sounds like it will be a tremendously difficult task, but in the end,
+it is very easy! Plugin Oriented Programming does the hard work for you. Detecting
+the location of plugins and the `hub` keeping data organized is all built into `pop`.
+
+Next Up - Contracts
+===================
+
+The last major concept to cover is *Contracts*. Using Contracts we can ensure that
+plugins follow the patterns that are set up in our *Subs*. Contracts also makes
+implementing *Vertical App Merging* projects safe and ensure that users correctly
+use our *Subs* and plugins when they use *Horizontal App Merging*.

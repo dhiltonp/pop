@@ -28,7 +28,7 @@ When making a *Sub* consider how the interface can be extended, and created, via
 of plugins. Different established patterns do this in different ways.
 
 Lets take a look at a few of the patterns that exist in the wild to see how these problems
-are commonly dealt with
+are commonly dealt with.
 
 Collection Pattern
 ==================
@@ -38,14 +38,13 @@ data from multiple sources, or scanning hardware for specific properties. A grea
 this pattern is a little application called "Grains" that is used to collect system data.
 
 The `grains` system creates a common and simple pattern. It runs all of the exposed functions
-found in the grains *Sub* and those function in turn extend a data structure found on the `hub`.
+found in the grains *Sub* and those functions in turn extend a data structure found on the `hub`.
 
 Lets take a look at the `init.py` file for `grains`:
 
 .. code-block:: python
 
         # Import python libs
-        from typing import Any, Dict
         import asyncio
 
 
@@ -99,7 +98,7 @@ The __init__ Function
 The `__init__` function is simple, as it should be. It recursively loads nested *Subs*
 that have been created and sets up a dict on the `hub` inside of the `grains` namespace.
 Since the `GRAINS` dict is all caps we know it is not a function or a *Sub*, it is a variable.
-The `GRAINS` dict is also location under `hub.grains`. This means that all plugins created on
+The `GRAINS` dict is also located under `hub.grains`. This means that all plugins created on
 the *Sub* are intended to have write access to the `hub.grains.GRAINS` variable.
 
 The run_sub Function
@@ -107,8 +106,8 @@ The run_sub Function
 
 Next we have the meat of the pattern. The `run_sub` function is simple. It just iterates over
 all of the plugins exposed in a *Sub* and calls them! If they are a coroutine then they get
-awaited in a batch. But the end result is simple, any plugin that is added will get called
-when the pattern is executed.
+awaited in a batch. But the end result is simple, any plugin that is added will be found,
+and all functions will be called when the pattern is executed.
 
 A Grains Plugin
 ---------------
@@ -132,18 +131,19 @@ Spine Pattern
 =============
 
 The spine pattern defines the startup spine of an application. This is a pattern where your
-application loads up config data, starts worker processes and loads the bulk of the subsystems
+application loads up configuration data, starts worker processes and loads the bulk of the subsystems
 to be used.
 
 While many projects will have a simple cli startup sequence, that does not constitute a spine pattern.
 Most projects should not have what would be considered a *Spine* pattern, this pattern should
 be thought of as a pattern that itself is used to app-merge many other projects.
 
-This is also a reason why loading config data or starting an async loop should not happen in
+This is also a reason why loading configuration data or starting an async loop should not happen in
 the `__init__` function for any *Sub*.
 
 This is yet another opportunity to cover the fact that all projects should be small and brought
-together in tight efficient ways.
+together in tight efficient ways. Here are a few things that are commonly done inside of a
+*Spine* pattern:
 
 * Set up the core data structures used by the application
 * Load up `conf` and read in the application configuration
@@ -156,10 +156,21 @@ Beacon Pattern
 ==============
 
 The beacon pattern is used to gather events. In this example we will make a simple
-crypto-currency tracker. The *Sub* int his example will be called `beacons`, it uses
+crypto-currency tracker. The *Sub* in this example will be called `beacons`, it uses
 an asyncio queue to collect and store data. This would be a simple *init.py*:
 
 .. code-block:: python
+
+    # Import python libs
+    import asyncio
+
+
+    def __init__(hub):
+        """
+        Set up the local data stores
+        """
+        hub.beacons.QUE = asyncio.Queue()
+
 
     async def start(hub):
         """
@@ -177,7 +188,7 @@ an asyncio queue to collect and store data. This would be a simple *init.py*:
 This example shows iterating over the modules found in the `beacons` *Sub*. The plugins are
 defined as needing to implement an async generator function. We call the async generator
 function which returns an async generator that gets appended to a list. That list is then
-passed to the as_yielded function that yields as the next async generator yields. The
+passed to the `as_yielded` function that yields as the next async generator yields. The
 yielded data is then added to a QUE that can be ingested elsewhere.
 
 Following this pattern a plugin that emits a beacon could subsequently look like this:
@@ -219,6 +230,10 @@ subsystem.
 .. code-block:: python
 
     import asyncio
+
+    def __init__(hub):
+        hub.flows.QUE = asyncio.Queue()
+
 
     async def start(hub, mod):
         while True:
@@ -269,7 +284,7 @@ every aspect of your code pluggable!
 Plugins Allow for App Merging!
 ==============================
 
-We have eluded to App Merging a few times, well, the excitement is finally here! App Merging
+We have eluded to *App Merging* a few times, well, the excitement is finally here! App Merging
 is one of the most powerful aspects of Plugin Oriented Programming, and it is in the next
 chapter.
 

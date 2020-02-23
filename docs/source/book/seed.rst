@@ -48,3 +48,11 @@ run your `pop` project from the root of the source code tree. Give it a shot:
 
 You should see the output `poppy works`, this is being run from
 `poppy/poppy/init.py`.
+
+Moving Forward
+==============
+
+Getting started with `pop` is covered in the `pop` quickstart guide but it makes
+sense to cover the basics here. `pop-seed` will be referenced in a number of
+places moving forward, as well as files like the `conf.py`. This brief respite
+was provided here to ensure that there is a little context.
