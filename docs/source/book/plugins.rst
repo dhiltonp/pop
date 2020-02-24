@@ -79,15 +79,148 @@ Virtual Names
 
 Virtual names allow for plugins to get renamed dynamically. This can be very useful
 when creating dynamically assigned plugins. A good example here is normalizing
-multiple operating systems. We can take network management for example.
+multiple operating systems or apis into a single exposed interface.
+
+We can take network management for example. Lets say that you wanted to make a system
+that allowed you to ask any operating system to give you network information
+and every operating system recived the same input and gave the same output. Even though
+the code dynamically determined which plugin to run for you?
+
+Lets assume that we are in a *Sub* called `net` and in a plugin called `windows_query.py`
+and `linux_query.py`. We then want the plugins to be exposed on the `hub` as `query`, but
+only loaded if running the rspective platform:
+
+The `windows_query.py` file:
+
+.. code-block:: python
+
+    import sys
+
+    __virtualname__ = 'query'
+
+    def __vitual__(hub):
+        """
+        Only load on Windows
+        """
+        if sys.platform.lower().startswith("win"):
+            return True
+        return False
+
+
+    def interfaces(hub):
+        # get windows network data
+
+The `linux_query.py` file:
+
+.. code-block:: python
+
+    import sys
+
+    __virtualname__ = 'query'
+
+    def __vitual__(hub):
+        """
+        Only load on Linux
+        """
+        if sys.platform.lower().startswith("linux"):
+            return True
+        return False
+
+
+    def interfaces(hub):
+        # get Linux network data
+
+
+This example is a little contrived to illustrate a point. Since the `__virtualname__` variable
+is set then the plugin will show up as `query` on the hub for both files. The trick is making
+sure that they only show up on the correct platforms. This is what the `__virtual__` function is
+for, it is called when the plugin is loaded and if ti returns `False`, then the plugin is
+discarded and not loaded up onto the `hub`.
+
+This makes it very easy to make dynamic decisions based on variables like platform and configuration
+to dynamically decide which plugins to load under what circumstances.
 
 
 Func Alias
 ==========
 
-Function Alias
+Sometimes it is desirable to to load up a function name onto the `hub` that is not
+the same as the function name in the file. This can be very useful because Python
+uses a number of common names as built in variables and functions that you don't
+want to override.
 
-Instance Management
-===================
+When making function names on the `hub` it is important to remember that you are creating
+an API interface that may be exposed, not only internally to your application, but also
+over the network. This means that having clean, self describing, terse, names can be
+very helpful.
 
-Make dicts on the hub that contain instances.
+Instead of making long names it is good to utilize the information that is exposed in
+the path on the `hub` to your function. This allows for variable names to be short
+while still  communicating the nature of the function.
+
+A simple example can be writing a system to expose an API. Lets suppose that we are
+making plugins to communicate with a cloud API. It is simple to make a function
+called `list` in a plugin called `network` in a *Sub* called `azure`. This way
+the function ref on the hub is self explanatory; `hub.azure.network.list`.
+
+This presents the follow on problem that the func alias system is built for. The
+`list` function is a built in function for Python that should not be overwritten!
+Oh what to do?
+
+Simple! If you add a dict to your plugin called `__func_alias__` then you can
+cleanly map one function name to another, allowing you to expose the API
+interface that you feel is clean without violating any Python rules:
+
+.. code-block:: python
+
+    __func_alias__ = {'list_': 'list'}
+
+    def list_(hub):
+        # Code
+
+Now this function will be exposed on the hub as `list` even though it is, to all
+Python loading rules called `list_`.
+
+The Initializer Function
+========================
+
+Every module can have an initializer function. This is a function that gets called
+when the plugin gets loaded. These functions ca be very effective as setting up
+data structures on the `hub` or loading a local cache needed by the plugin.
+
+Remember, that the initializer is called dynamically and should execute very
+quickly, it is unwise to add code to an initializer that takes a long time to run!
+
+Adding as initializer is very easy, just add a function called `__init__` to the
+plugin. This is designed to be intuitive for Python developers, as the `__init__`
+function is used in Python classes as well.
+
+.. code-block:: python
+
+    def __init__(hub):
+        hub.poppy.plugin.DATA = {}
+
+This example is very simple, but it is a very common pattern to use. Just
+adding a new variable to the plugin's namespace in the `__init__` function
+makes the variable available to all of the function in the plugin.
+
+Data on the hub
+===============
+
+Placing data on the `hub` is a powerful way to manage the data used in plugins and
+*Subs*. Any new dataset can be cleanly added to to the `hub`. Here is a simple example:
+
+.. code-block:: python
+
+    def __init__(hub):
+        hub.poppy.plugin.DATA = {}
+        hub.poppy.POPPY_THINGS = {}
+        # While you are not restricted from adding data directly to the hub, it is strongly discouraged
+        hub.GLOBAL_THINGS = {}
+
+    def foo(hub):
+        hub.poppy.plugin.DATA['something useful'] = 37
+
+Now these data structures are available to all applications on the `hub`. This allows
+for data to be globally available but namespaced so other parts of the application don't
+manipulate the data.
