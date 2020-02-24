@@ -133,10 +133,12 @@ App Merging sounds like it will be a tremendously difficult task, but in the end
 it is very easy! Plugin Oriented Programming does the hard work for you. Detecting
 the location of plugins and the `hub` keeping data organized is all built into `pop`.
 
-Next Up - Contracts
-===================
+Next Up - Plugins
+=================
 
-The last major concept to cover is *Contracts*. Using Contracts we can ensure that
-plugins follow the patterns that are set up in our *Subs*. Contracts also makes
-implementing *Vertical App Merging* projects safe and ensure that users correctly
-use our *Subs* and plugins when they use *Horizontal App Merging*.
+There has been a great deal of talk about Plugin Oriented Programming, but not a lot
+of talk about plugins. Plugins comprise all of the code that is created, as all code
+in Plugin Oriented Programming is plugin code.
+
+Next up we will dive into how plugins work, how they get access to the `hub` and what
+special tools are available within plugins to get the most out of Plugin Oriented Programming.
