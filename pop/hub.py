@@ -391,7 +391,7 @@ class Sub:
         """
         Load all modules found during the scan.
 
-        .. attention:: This completely disables the lazy loader behavior or pop
+        .. attention:: This completely disables the lazy loader behavior of pop
         """
         if self._loaded_all is True:
             return

@@ -28,6 +28,7 @@ def add(
     mod_basename="pop.sub",
     stop_on_failures=False,
     init=True,
+    load_all=True,
 ):
     """
     Add a new subsystem to the hub
@@ -63,6 +64,8 @@ def add(
     )
     root._subs[subname]._sub_init(init)
     root._iter_subs = sorted(root._subs.keys())
+    if load_all:
+        root._subs[subname]._load_all()
 
 
 def remove(hub, subname):

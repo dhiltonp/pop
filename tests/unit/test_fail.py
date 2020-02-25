@@ -45,11 +45,11 @@ def test_load_error_traceback_stop_on_failures():
     In this test case pop will simply stop processing when the error is found
     """
     hub = pop.hub.Hub()
-    hub.pop.sub.add(
-        pypath="tests.mods.bad_import", subname="mods", stop_on_failures=True
-    )
     with pytest.raises(pop.exc.PopError, match="Failed to load python module"):
-        hub.mods.bad_import.func()
+        hub.pop.sub.add(
+            pypath="tests.mods.bad_import", subname="mods", stop_on_failures=True
+        )
+        # hub.mods.bad_import.func()
 
 
 def test_verror_does_not_overload_loaded_mod():

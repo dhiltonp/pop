@@ -207,9 +207,9 @@ def test_contract_manipulate():
 
 def test_contract_sigs():
     hub = pop.hub.Hub()
-    hub.pop.sub.add("tests.csigs")
     # TODO: This test needs to cover more cases
     with pytest.raises(pop.exc.ContractSigException) as exc:
+        hub.pop.sub.add("tests.csigs")
         hub.csigs.sigs.first(4, 6, 8)
     exstr = str(exc.value)
     assert "Kwargs are not permitted as a parameter" in exstr
@@ -273,8 +273,6 @@ def test_mod_init():
     hub.pop.sub.add(
         pypath="tests.mods.packinit", subname="mods", contracts_pypath="tests.contracts"
     )
-    # Force load all to make sure mod is init'ed
-    hub.mods._load_all()
     assert "LOADED" in hub.context
     assert hub.mods.packinit.loaded() is True
 
@@ -282,7 +280,10 @@ def test_mod_init():
     hub = pop.hub.Hub()
     hub.context = {}
     hub.pop.sub.add(
-        pypath="tests.mods.packinit", subname="mods", contracts_pypath="tests.contracts"
+        pypath="tests.mods.packinit",
+        subname="mods",
+        contracts_pypath="tests.contracts",
+        load_all=False,
     )
     assert hub.context == {"NEW": True}
     assert "LOADED" not in hub.context
@@ -298,6 +299,7 @@ def test_mod_init():
         subname="mods",
         contracts_pypath="tests.contracts",
         init=False,
+        load_all=False,
     )
     assert hub.context == {}
 
