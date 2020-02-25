@@ -30,7 +30,7 @@ def scan(dirs):
 
 def _apply_scan(ret, dir_, fn_):
     """
-    Convert the scan data into
+    Convert the scan data into paths and refs
     """
     if fn_.startswith("_"):
         return
