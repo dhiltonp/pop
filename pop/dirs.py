@@ -75,5 +75,9 @@ def dynamic_dirs():
                 if name not in ret:
                     ret[name] = []
                 for path in paths:
-                    ret[name].append(os.path.join(dir_, path.replace(".", os.sep)))
+                    ref = os.path.join(dir_, path.replace(".", os.sep))
+                    if dir_.endswith(name):
+                        ret[name].insert(0, ref)
+                    else:
+                        ret[name].append(ref)
     return ret

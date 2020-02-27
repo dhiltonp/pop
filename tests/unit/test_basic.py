@@ -368,10 +368,18 @@ def test_dyne_nest():
     assert hub.dn1.nest.next.last.test.ping()
 
 
-def test_dyne_overwrite():
+def test_dyne_extend():
     hub = pop.hub.Hub()
     hub.pop.sub.add(dyne_name="dn1")
     hub.pop.sub.load_subdirs(hub.dn1, recurse=True)
     assert hub.dn1.nest.over.in_dn1()
     assert hub.dn1.nest.over.in_dn2()
     assert hub.dn1.nest.over.in_dn3()
+
+
+def test_dyne_overwrite():
+    hub = pop.hub.Hub()
+    hub.pop.sub.add(dyne_name="dn1")
+    hub.pop.sub.load_subdirs(hub.dn1, recurse=True)
+    # Assure that the first instance of a function gets overwritten
+    assert hub.dn1.nest.over.source() == "dn2"
