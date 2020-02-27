@@ -80,4 +80,10 @@ def dynamic_dirs():
                         ret[name].insert(0, ref)
                     else:
                         ret[name].append(ref)
+    for name in ret:
+        if not ret[name]:
+            continue
+        first = ret[name].pop(0)
+        ret[name] = sorted(ret[name])
+        ret[name].insert(0, first)
     return ret
