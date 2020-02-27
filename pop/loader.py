@@ -215,8 +215,7 @@ def prep_loaded_mod(this_sub, mod, mod_name, contracts):
     Read the attributes of a python module and create a LoadedMod, which resolves
     aliases and omits objects that should not be exposed.
     """
-    # pylint: disable=protected-access
-    lmod = LoadedMod(mod_name)
+    lmod = this_sub._loaded.get(mod_name, LoadedMod(mod_name))
     ref = f"{this_sub._subname}.{mod_name}"  # getattr(hub, ref) should resolve to this module
     for attr in getattr(mod, "__load__", dir(mod)):
         name = getattr(mod, "__func_alias__", {}).get(attr, attr)

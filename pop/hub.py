@@ -316,7 +316,7 @@ class Sub:
 
     def _find_mod(self, item, match_only=False):
         """
-        find the module named item
+        Find the module named item
         """
         for iface in self._scan:
             for bname in self._scan[iface]:
@@ -349,7 +349,11 @@ class Sub:
             raise pop.exc.PopLoadError(
                 "Bad call to load item, no bname {} in iface {}".format(bname, iface)
             )
-        mname = "{}.{}".format(self._name_root, os.path.basename(bname))
+        # The mname is the name to give the module in python's sys.modules
+        # This name must be unique for every loaded module, so we use the full
+        # module path sans the file extention
+        mname = self._scan[iface][bname]["path"].replace(os.sep, ".")
+        mname = mname[mname.index(".") + 1 : mname.rindex(".")]
         mod = pop.loader.load_mod(mname, iface, self._scan[iface][bname]["path"],)
         if self._process_load_error(mod):
             self._load_errors[os.path.basename(bname)] = mod
