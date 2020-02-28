@@ -14,8 +14,7 @@ except ImportError:
     HAS_TORNADO = False
 
 
-@asyncio.coroutine
-def asyncio_demo():
+async def asyncio_demo(hub):
     return True
 
 
