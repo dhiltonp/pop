@@ -12,14 +12,14 @@ import importlib
 import copy
 
 
-def _ex_final(confs, final, override, key_to_ref, ops_to_ref, globe=False):
+def _ex_final(confs, final, override, key_to_ref, ops_to_ref):
     """
     Scan the configuration datasets, create the final config
     value, and detect collisions
     """
     for arg in confs:
         for key in confs[arg]:
-            ref = f"global.{key}" if globe else f"{arg}.{key}"
+            ref = f"{arg}.{key}"
             if ref in override:
                 s_key = override[ref]["key"]
                 s_opts = override[ref]["options"]
@@ -72,7 +72,6 @@ def load(
         imports = [imports]
     primary = imports[0] if cli is None else cli
     confs = {}
-    globe = {}
     final = {}
     collides = []
     key_to_ref = {}
@@ -99,7 +98,6 @@ def load(
         vconf.update(confs[primary])
         confs[primary] = vconf
     _ex_final(confs, final, override, key_to_ref, ops_to_ref)
-    _ex_final(globe, final, override, key_to_ref, ops_to_ref, True)
     for opt in ops_to_ref:
         g_count = 0
         if len(ops_to_ref[opt]) > 1:
@@ -107,8 +105,7 @@ def load(
     for key in key_to_ref:
         col = []
         for ref in key_to_ref[key]:
-            if not ref.startswith("global."):
-                col.append(ref)
+            col.append(ref)
         if len(col) > 1:
             collides.append({key: key_to_ref[key]})
     if collides:
