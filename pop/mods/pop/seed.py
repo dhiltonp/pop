@@ -321,7 +321,7 @@ def mkproj(hub):
     Create the pyproject.toml file
     """
     path = os.path.join(hub.PATH, "pyproject.toml")
-    with open(path, "w+") as fp:
+    with open(path, "a+") as fp:
         fp.write(PYPROJ)
 
 
