@@ -5,7 +5,7 @@ Instances
 One of the largest challenges for developers moving over from OOP to Plugin
 Oriented Programming is dealing with the concept of class instances. In
 OOP it is fundamental to create a class and then created instances of said
-class. 
+class.
 
 With the prevalence of *Subs* in Plugin Oriented Programming it becomes
 easy to over conflate them with classes in OOP. While they share a few
