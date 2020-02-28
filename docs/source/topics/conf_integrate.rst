@@ -34,12 +34,6 @@ CONFIG
 The `CONFIG` dict is where the configuration options used specifically by the subsystems
 defined in this project.
 
-GLOBAL
-------
-
-The `GLOBAL` dict is used for configuration that is likely shared with other projects. Like
-the root location of a cache directory.
-
 CLI_CONFIG
 ----------
 
