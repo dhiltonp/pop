@@ -61,7 +61,6 @@ def load(
     override = {'<package>.key': 'key': 'new_key', 'options': ['--option1', '--option2']}
 
     CONFIG: The main configuration for this package - loads to hub.OPT['<import>']
-    GLOBAL: Global configs to be used by other packages - loads to hub.OPT['global]
     CLI_CONFIG: Loaded only if this is the only import or if specified in the cli option
     SUBS: Used to define the subcommands, only loaded if this is the cli config
     """
@@ -80,7 +79,10 @@ def load(
     ops_to_ref = {}
     subs = {}
     for imp in imports:
-        cmod = importlib.import_module(f"{imp}.conf")
+        try:
+            cmod = importlib.import_module(f"{imp}.conf")
+        except ImportError:
+            continue
         if hasattr(cmod, "CONFIG"):
             confs[imp] = copy.deepcopy(cmod.CONFIG)
         if cli == imp:
@@ -88,8 +90,6 @@ def load(
                 confs[imp].update(copy.deepcopy(cmod.CLI_CONFIG))
             if hasattr(cmod, "SUBS"):
                 subs = copy.deepcopy(cmod.SUBS)
-        if hasattr(cmod, "GLOBAL"):
-            globe[imp] = copy.deepcopy(cmod.GLOBAL)
     if logs:
         lconf = hub.conf.log.init.conf(primary)
         lconf.update(confs[primary])

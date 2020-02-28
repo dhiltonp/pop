@@ -169,7 +169,6 @@ REQ = "pop\n"
 
 CONF = """CLI_CONFIG = {}
 CONFIG = {}
-GLOBAL = {}
 SUBS = {}
 DYNE = {
     "%%NAME%%": ["%%NAME%%"],
