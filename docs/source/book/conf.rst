@@ -9,4 +9,4 @@ the startup of an application must be taken into full account. The
 process of loading up that data must also be pluggable.
 
 Addressing these needs creates a difficult point of intersection.
-As these points get evaluated it becomes necessary to 
+As these points get evaluated it becomes necessary to
