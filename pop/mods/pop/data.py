@@ -121,7 +121,6 @@ def dynamic_mutable_namespaced_map(hub, *args, **kwargs):
             This should only ever be called from within a hub module, otherwise
             it should stack trace, or return heaven knows what...
             """
-
             if hasattr(sys, "_getframe"):
                 # implementation detail of CPython, speeds up things by 100x.
                 call_frame = sys._getframe(4)

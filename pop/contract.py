@@ -4,6 +4,8 @@ Contracts to enforce loader objects
 """
 
 # Import python libs
+import asyncio
+import types
 import inspect
 import os
 from collections import namedtuple
@@ -93,11 +95,15 @@ def load_contract(contracts, default_contracts, mod, name):
     return raws
 
 
-class Wrapper:  # pylint: disable=too-few-public-methods
+class Wrapper:
     def __init__(self, func, ref, name):
         self.__dict__.update(
             getattr(func, "__dict__", {})
         )  # do this first so we later overwrite any conflicts
+        if asyncio.iscoroutinefunction(func):
+            self.ftype = "coro"
+        else:
+            self.ftype = "std"
         self.func = func
         self.ref = ref
         self.name = name
@@ -113,7 +119,7 @@ class Wrapper:  # pylint: disable=too-few-public-methods
         )
 
 
-class Contracted(Wrapper):  # pylint: disable=too-few-public-methods
+class Contracted(Wrapper):
     """
     This class wraps functions that have a contract associated with them
     and executes the contract routines
@@ -146,9 +152,50 @@ class Contracted(Wrapper):  # pylint: disable=too-few-public-methods
             sum([len(l) for l in self.contract_functions.values()]) > 0
         )
 
-    def __call__(self, *args, **kwargs):
-        args = (self.hub,) + args
+    async def _acall(self, *args, **kwargs):
+        if not self._has_contracts:
+            ret = self.func(*args, **kwargs)
+            if isinstance(ret, types.AsyncGeneratorType):
+                return ret
+            else:
+                return await ret
+        contract_context = ContractedContext(self.func, args, kwargs, self.signature)
 
+        for fn in self.contract_functions["pre"]:
+            pre_ret = fn(contract_context)
+            if asyncio.iscorutine(pre_ret):
+                await pre_ret
+        if self.contract_functions["call"]:
+            ret = await self.contract_functions["call"][0](contract_context)
+        else:
+            ret = self.func(*contract_context.args, **contract_context.kwargs)
+            if isinstance(ret, types.AsyncGeneratorType):
+                return ret
+            else:
+                return await ret
+        for fn in self.contract_functions["post"]:
+            post_ret = fn(contract_context._replace(ret=ret))
+            if asyncio.iscorutine(post_ret):
+                post_ret = await post_ret
+            if post_ret is not None:
+                ret = post_ret
+
+        return ret
+
+    async def _agcall(self, agen):
+        async for chunk in ret:
+            yield chunk
+        ret = chunk
+        for fn in self.contract_functions["post"]:
+            post_ret = fn(contract_context._replace(ret=ret))
+            if asyncio.iscorutine(post_ret):
+                post_ret = await post_ret
+            if post_ret is not None:
+                ret = post_ret
+
+        yield ret
+
+    def _call(self, *args, **kwargs):
         if not self._has_contracts:
             return self.func(*args, **kwargs)
         contract_context = ContractedContext(self.func, args, kwargs, self.signature)
@@ -165,3 +212,14 @@ class Contracted(Wrapper):  # pylint: disable=too-few-public-methods
                 ret = post_ret
 
         return ret
+
+    def __call__(self, *args, **kwargs):
+        """
+        Determine if the function needs to call the async system of the std
+        system, call said system and return
+        """
+        args = (self.hub,) + args
+        if self.ftype == "std":
+            return self._call(*args, **kwargs)
+        elif self.ftype == "coro":
+            return self._acall(*args, **kwargs)
