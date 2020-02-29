@@ -102,6 +102,8 @@ class Wrapper:
         )  # do this first so we later overwrite any conflicts
         if asyncio.iscoroutinefunction(func):
             self.ftype = "coro"
+        elif inspect.isasyncgenfunction(func):
+            self.ftype = "agen"
         else:
             self.ftype = "std"
         self.func = func
@@ -154,46 +156,52 @@ class Contracted(Wrapper):
 
     async def _acall(self, *args, **kwargs):
         if not self._has_contracts:
-            ret = self.func(*args, **kwargs)
-            if isinstance(ret, types.AsyncGeneratorType):
-                return ret
-            else:
-                return await ret
+            return await self.func(*args, **kwargs)
         contract_context = ContractedContext(self.func, args, kwargs, self.signature)
 
         for fn in self.contract_functions["pre"]:
             pre_ret = fn(contract_context)
-            if asyncio.iscorutine(pre_ret):
+            if asyncio.iscoroutine(pre_ret):
                 await pre_ret
         if self.contract_functions["call"]:
             ret = await self.contract_functions["call"][0](contract_context)
         else:
-            ret = self.func(*contract_context.args, **contract_context.kwargs)
-            if isinstance(ret, types.AsyncGeneratorType):
-                return ret
-            else:
-                return await ret
+            ret = await self.func(*contract_context.args, **contract_context.kwargs)
         for fn in self.contract_functions["post"]:
             post_ret = fn(contract_context._replace(ret=ret))
-            if asyncio.iscorutine(post_ret):
+            if asyncio.iscoroutine(post_ret):
                 post_ret = await post_ret
             if post_ret is not None:
                 ret = post_ret
 
         return ret
 
-    async def _agcall(self, agen):
-        async for chunk in ret:
-            yield chunk
+    async def _agcall(self, *args, **kwargs):
+        if not self._has_contracts:
+            async for chunk in self.func(*args, **kwargs):
+                yield chunk
+            return
+        contract_context = ContractedContext(self.func, args, kwargs, self.signature)
+
+        for fn in self.contract_functions["pre"]:
+            pre_ret = fn(contract_context)
+            if asyncio.iscoroutine(pre_ret):
+                await pre_ret
+        if self.contract_functions["call"]:
+            async for chunk in self.contract_functions["call"][0](contract_context):
+                yield chunk
+        else:
+            async for chunk in self.func(
+                *contract_context.args, **contract_context.kwargs
+            ):
+                yield chunk
         ret = chunk
         for fn in self.contract_functions["post"]:
             post_ret = fn(contract_context._replace(ret=ret))
-            if asyncio.iscorutine(post_ret):
+            if asyncio.iscoroutine(post_ret):
                 post_ret = await post_ret
             if post_ret is not None:
-                ret = post_ret
-
-        yield ret
+                yield post_ret
 
     def _call(self, *args, **kwargs):
         if not self._has_contracts:
@@ -223,3 +231,5 @@ class Contracted(Wrapper):
             return self._call(*args, **kwargs)
         elif self.ftype == "coro":
             return self._acall(*args, **kwargs)
+        elif self.ftype == "agen":
+            return self._agcall(*args, **kwargs)
