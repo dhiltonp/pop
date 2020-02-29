@@ -85,7 +85,7 @@ setup(
 )
 """
 
-PYPROJ = """[tool.black]
+PYPROJ = r"""[tool.black]
 line-length = 88
 target-version = ['py36', 'py37', 'py38']
 include = '\.pyi?$'
@@ -107,7 +107,7 @@ exclude = '''
 '''
 """
 
-PRECOM = """---
+PRECOM = r"""---
 minimum_pre_commit_version: 1.15.2
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
