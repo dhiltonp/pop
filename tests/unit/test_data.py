@@ -10,6 +10,76 @@ def hub():
     yield hub
 
 
+class TestImmutableNamespacedMap:
+    def test_init(self, hub):
+        """
+        Verify that an init dict is loaded into the namespace
+        """
+        init_dict = {"a": 2, "b": 4}
+        inm = hub.pop.data.imap(init_dict)
+        assert inm == init_dict
+
+    def test_init_dict(self, hub):
+        """
+        Verify that a dict is converted into a mutable mapping namespace from self.update
+        """
+        init_dict = {"k": {}}
+        inm = hub.pop.data.imap(init_dict)
+        assert inm == init_dict
+        assert isinstance(inm["k"], abc.MutableMapping)
+
+    def test_setitem(self, hub):
+        inm = hub.pop.data.imap({})
+        with pytest.raises(TypeError):
+            inm["k"] = 1
+
+    def test_delitem(self, hub):
+        inm = hub.pop.data.imap({})
+        with pytest.raises(TypeError):
+            del inm["k"]
+
+    def test_getitem(self, hub):
+        inm = hub.pop.data.imap({"k": "v"})
+        assert inm.get("k") == "v"
+
+    def test_getattr(self, hub):
+        init_dict = {"k": "v"}
+        inm = hub.pop.data.imap(init_dict)
+        assert inm.k == "v"
+
+    def test_getattr_nested(self, hub):
+        d = {"d": "val"}
+        c = {"c": d}
+        b = {"b": c}
+        a = {"a": b}
+        inm = hub.pop.data.imap(a)
+
+        assert inm.a == b
+        assert inm.a.b == c
+        assert inm.a.b.c == d
+        assert inm.a.b.c.d == "val"
+
+    def test_setattr(self, hub):
+        inm = hub.pop.data.imap({})
+        with pytest.raises(TypeError):
+            inm.k = "value"
+
+    def test_overwrite_store(self, hub):
+        inm = hub.pop.data.imap({})
+        with pytest.raises(TypeError):
+            inm._store = tuple()
+
+    def test_len(self, hub):
+        length = 100
+        inm = hub.pop.data.imap({f"item_{d}": d for d in range(length)})
+        assert len(inm) == len(inm._store) == length
+
+    def test_str(self, hub):
+        init = {"a": {}, "b": 1, "c": False, "d": None}
+        inm = hub.pop.data.imap(init)
+        assert str(init) == str(inm)
+
+
 class TestMutableNamespacedMap:
     def test_init(self, hub):
         """
@@ -117,10 +187,9 @@ class TestDynamicMutableNamespacedMap:
         """
         Verify that a dict is converted into a mutable mnmping namespace from self.update
         """
-        init_dict = {"k": {}}
+        init_dict = {"k": "v"}
         dmap = hub.pop.data.dmap(init_dict)
         assert dmap == init_dict
-        assert isinstance(dmap["k"], abc.MutableMapping)
 
     def test_setitem(self, hub):
         pass  # This is an integration test

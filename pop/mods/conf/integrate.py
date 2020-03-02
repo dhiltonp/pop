@@ -111,8 +111,8 @@ def load(
     if collides:
         raise KeyError(collides)
     opts = hub.conf.reader.read(final, subs, loader=loader)
-    f_opts = {}  # I don't want this to be a defaultdict,
-    # if someone tries to add a key willy nilly it should fail
+    # This will be put into an immutable data type before it is passed on
+    f_opts = {}
     for key in opts:
         if key == "_subparser_":
             f_opts["_subparser_"] = opts["_subparser_"]
@@ -129,7 +129,7 @@ def load(
         )
         for imp in f_opts:
             hub.conf.dirs.verify(f_opts[imp])
-    hub.OPT = f_opts
+    hub.OPT = hub.pop.data.imap(f_opts)
     if logs:
         log_plugin = hub.OPT[primary].get("log_plugin")
         getattr(hub, f"conf.log.{log_plugin}.setup")(hub.OPT[primary])

@@ -624,7 +624,7 @@ def test_integrate_simple():
     hub = pop.hub.Hub()
     hub.pop.sub.add("pop.mods.conf")
     hub.conf.integrate.load("tests.conf1")
-    assert hub.OPT == {
+    assert dict(hub.OPT) == {
         "tests.conf1": {
             "log_datefmt": "%H:%M:%S",
             "log_file": "tests.conf1.log",
@@ -646,7 +646,7 @@ def test_integrate_merge():
     hub.conf.integrate.load(
         ["tests.conf1", "tests.conf2"], cli="tests.conf1", logs=False, version=False
     )
-    assert hub.OPT == {
+    assert dict(hub.OPT) == {
         "tests.conf2": {"monty": False},
         "tests.conf1": {
             "test": False,
@@ -670,7 +670,7 @@ def test_integrate_override():
     hub.conf.integrate.load(
         ["tests.conf1", "tests.conf2", "tests.conf3"], over, logs=False, version=False
     )
-    assert hub.OPT == {
+    assert dict(hub.OPT) == {
         "tests.conf2": {"monty": False},
         "tests.conf1": {"stuff_dir": "/tmp/tests.conf1/stuff", "test2": False},
         "tests.conf3": {"test": False},
