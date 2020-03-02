@@ -80,11 +80,7 @@ class TestLazyPop:
 
         l_hub = testing._LazyPop(hub)
 
-        for l in (l_hub, l_hub.mods, l_hub.mods.testing):
-            try:
-                assert isinstance(getattr(l, "FOO"), NonCallableMagicMock)
-            except Exception as e:
-                raise type(e)("{}: {}".format(type(l._LazyPop__obj).__name__, str(e)))
+        for _ in (l_hub, l_hub.mods, l_hub.mods.testing):
             with pytest.raises(AttributeError):
                 l_hub.BAZ
 
