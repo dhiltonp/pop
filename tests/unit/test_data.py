@@ -72,7 +72,7 @@ class TestImmutableNamespacedMap:
     def test_len(self, hub):
         length = 100
         inm = hub.pop.data.imap({f"item_{d}": d for d in range(length)})
-        assert len(inm) == len(inm._store) == length
+        assert len(inm) == length
 
     def test_str(self, hub):
         init = {"a": {}, "b": 1, "c": False, "d": None}
