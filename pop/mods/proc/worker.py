@@ -56,7 +56,10 @@ async def work(hub, reader, writer):
     """
     inbound = await reader.readuntil(hub.proc.DELIM)
     inbound = inbound[: -len(hub.proc.DELIM)]
-    payload = msgpack.loads(inbound, encoding="utf8")
+    if msgpack.version < (1, 0, 0):
+        payload = msgpack.loads(inbound, encoding="utf-8")
+    else:
+        payload = msgpack.loads(inbound)
     ret = b""
     if "fun" not in payload:
         ret = {"err": "Invalid format"}
@@ -158,4 +161,7 @@ async def ret(hub, payload):
     ret = await reader.readuntil(hub.proc.DELIM)
     ret = ret[: -len(hub.proc.DELIM)]
     writer.close()
-    return msgpack.loads(ret, encoding="utf8")
+    if msgpack.version < (1, 0, 0):
+        return msgpack.loads(ret, encoding="utf-8")
+    else:
+        return msgpack.loads(ret)
