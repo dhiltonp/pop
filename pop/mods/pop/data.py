@@ -20,54 +20,23 @@ def immutable_namespaced_map(hub, init: Dict[str, Any], **kwargs) -> abc.Mutable
         No values can be changed after initialization
         """
 
-        def __init__(self, init_: Dict[str, Any], name_: str, **c_kwargs):
+        def __init__(self, init_: Dict[str, Any], **c_kwargs):
             """
             :param init_: A dictionary from which to inherit data
-            :param name_: A unique name to give sub-namespaced tuples, for internal use only
             """
             init_.update(**c_kwargs)
             # __setattr__ is borked (on purpose) so we have to call it from super() right here
-            super().__setattr__(
-                "_fields", tuple(self.__prepare_key(k) for k in init_.keys())
-            )
-            store = collections.namedtuple(typename=name_, field_names=self._fields,)
             values = {}
             for k, v in init_.items():
-                k = self.__prepare_key(k)
                 if isinstance(v, Dict):
-                    values[k] = IMAP(init_=v, name_=k)
+                    values[k] = IMAP(init_=v)
                 elif isinstance(v, (tuple, int, str, bytes)):
                     values[k] = v
                 elif isinstance(v, Iterable):
                     values[k] = tuple(v)
                 else:
                     values[k] = v
-            super().__setattr__("_store", store(**values))
-
-        @staticmethod
-        def __prepare_key(k: str) -> str:
-            """
-            Named tuples like this class' underlying structures don't allow
-            certain characters to be fields/keys. Make them valid here.
-            It will make accessing them through the namespace confusing, but
-            then again that was already so if they had these characters
-            """
-            k = k.replace(".", "__dot__")
-            k = k.replace("-", "__dash__")
-            if k[0].isnumeric():
-                k = f"_num{k}"
-            return k
-
-        @staticmethod
-        def __reverse_key(k: str) -> str:
-            """
-            Reverse the key prepping when showing keys to the world
-            """
-            k = k.replace("__dot__", ".")
-            k = k.replace("__dash__", "-")
-            if k.startswith("_num") and k[4].isnumeric():
-                k = f"_num{k}"
-            return k
+            super().__setattr__("_IMAP__store", values)
 
         def __delitem__(self, k: str):
             raise TypeError(f"{self.__class__.__name__} does not support item deletion")
@@ -77,47 +46,40 @@ def immutable_namespaced_map(hub, init: Dict[str, Any], **kwargs) -> abc.Mutable
                 f"{self.__class__.__name__} does not support item assignment"
             )
 
-        def __getattr__(self, k: str) -> Any:
-            return getattr(self._store, self.__prepare_key(k))
-
         def __setattr__(self, k: str, v: Any):
             raise TypeError(
                 f"{self.__class__.__name__} does not support attribute assignment"
             )
 
-        def __getitem__(self, k: str) -> Any:
-            return getattr(self._store, self.__prepare_key(k))
+        def __getattr__(self, k: str):
+            return self.__store[k]
 
-        def get(self, k: str, default: Any = None) -> Any:
-            if k in self._fields:
-                return getattr(self._store, k)
-            else:
-                return default
+        def __getitem__(self, k: str) -> Any:
+            return self.__store[k]
+
+        def __contains__(self, k: str) -> bool:
+            return k in self.__store
+
+        def __iter__(self):
+            return iter(self.__store)
 
         def __len__(self) -> int:
-            return len(self._store)
+            return len(self.__store.keys())
 
-        def __iter__(self) -> Iterator[Any]:
-            return (self.__reverse_key(k) for k in self._fields)
-
-        def __dict__(self) -> Dict[str, Any]:
+        def _unpack(self) -> Dict[str, Any]:
             ret = {}
             # Unpack IMAP items so that it's turtles all the way down
             for k, v in self.items():
-                k = self.__reverse_key(k)
                 if isinstance(v, IMAP):
                     ret[k] = dict(v)
                 else:
                     ret[k] = v
             return ret
 
-        def __hash__(self) -> int:
-            return hash(self._store)
+        def __str__(self):
+            return str(self._unpack())
 
-        def __str__(self) -> str:
-            return str(self.__dict__())
-
-    return IMAP(init_=init, name_=IMAP.__name__, **kwargs)
+    return IMAP(init_=init, **kwargs)
 
 
 def mutable_namespaced_map(
