@@ -1,7 +1,6 @@
-import collections
 import collections.abc as abc
 import inspect
-import pop.contract
+import pop.contract as contract
 import sys
 from typing import Any, Coroutine, Dict, Iterable, Iterator
 
@@ -104,7 +103,7 @@ def mutable_namespaced_map(
             """
             Cast all nested dict values as MAP so they get it's benefits as well
             """
-            if isinstance(v, dict):
+            if isinstance(v, Dict):
                 v = MAP(v)
             self._store[k] = v
 
@@ -123,12 +122,18 @@ def mutable_namespaced_map(
             Return dict values on the MAP namespace
             Create the key if it doesn't exist
             """
-            if k not in self._store:
-                self._store[k] = MAP()
-            return self[k]
+            if k.startswith("_"):
+                return getattr(super(), k)
+            try:
+                if k not in self._store:
+                    self.__setitem__(k, MAP())
+                return self[k]
+            except Exception as e:
+                raise AttributeError(*e.args)
 
         def __setattr__(self, k: str, v: Any):
-            if k == "_store":
+            # Don't allow underscored keys to be put in the store
+            if k.startswith("_"):
                 super().__setattr__(k, v)
             else:
                 self[k] = v
@@ -146,11 +151,7 @@ def mutable_namespaced_map(
 
 
 def dynamic_mutable_namespaced_map(
-    hub,
-    init: Dict[str, Any] = None,
-    ref: pop.contract.Contracted = None,
-    *args,
-    **kwargs,
+    hub, init: Dict[str, Any] = None, ref: contract.Contracted = None, *args, **kwargs,
 ) -> abc.MutableMapping:
     class DMAP(abc.MutableMapping):
         """
@@ -174,7 +175,7 @@ def dynamic_mutable_namespaced_map(
         def __init__(
             self,
             init_: Dict[str, Any] = None,
-            ref_: pop.contract.Contracted = None,
+            ref_: contract.Contracted = None,
             *c_args,
             **c_kwargs,
         ):
@@ -205,7 +206,7 @@ def dynamic_mutable_namespaced_map(
                     f"No function found for '{k}'. Try creating this dmap with a ref"
                 )
 
-        def _get_caller(self) -> pop.contract.Contracted:
+        def _get_caller(self) -> contract.Contracted:
             """
             This function allows for hub to pop introspective calls.
             This should only ever be called from within a hub module, otherwise
@@ -250,15 +251,6 @@ def dynamic_mutable_namespaced_map(
             if k in self._ref:
                 del self._ref[k]
 
-        def __dict__(self):
-            ret = {}
-            for k, v in self._store.items():
-                if isinstance(v, DMAP):
-                    ret[k] = dict(v)
-                else:
-                    ret[k] = v
-            return ret
-
         def __getitem__(self, k: str) -> Any:
             return self._store[k]
 
@@ -268,13 +260,19 @@ def dynamic_mutable_namespaced_map(
             Create the key if it doesn't exist, this allows nested grains to be created in any order
             i.e. hub.grains.GRAINS.dict_grain.value = property(func)
             """
-            if k not in self._store:
-                self._setitem(k, DMAP())
-
-            return self[k]
+            # Do not allow underscored keys to be accessed through the namespace
+            if k.startswith("_"):
+                return super().__getattr__(k)
+            try:
+                if k not in self._store:
+                    self._setitem(k, DMAP())
+                return self[k]
+            except Exception as e:
+                raise AttributeError(*e.args)
 
         def __setattr__(self, k: str, v: Any):
-            if k in ("_parent_ref", "_ref", "_store"):
+            # Don't allow underscored keys to be put in the store
+            if k.startswith("_"):
                 super().__setattr__(k, v)
             else:
                 self._setitem(k, v)

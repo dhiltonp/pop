@@ -112,8 +112,6 @@ class _LazyPop:
                 attr = self.__class__(orig, self.__lut)
             elif isinstance(orig, Contracted):
                 attr = self._mock_function(orig)
-            elif isinstance(orig, object):
-                attr = self._mock_obj(orig)
             else:
                 attr = self._mock_attr(orig)
 
@@ -127,10 +125,6 @@ class _LazyPop:
 
     def _mock_function(self, f):
         raise NotImplementedError()
-
-    def _mock_obj(self, a):
-        # create_autospec needs to do this on a fresh callable version of the object
-        return create_autospec(a.__class__, spec_set=True)
 
 
 def strip_hub(f):
